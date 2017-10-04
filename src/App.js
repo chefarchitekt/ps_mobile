@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
+import { View, Text } from 'react-native';
 
 
 class App extends Component {
     render() {
         return (
-            <div>
-                My First App
-            </div>
+            <View>
+                <Text>
+                    My First App
+                </Text>
+            </View>
         );
     }
 }
