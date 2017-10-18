@@ -46,6 +46,19 @@ const makeRequest = async () => {
 }
 
 
+//for httpResources
+mappedKeys = [],
+			rurlData = /\{([^\}]+)\}/g,
+			data = $.extend({}, options.data);
+
+
+      settings.url = settings.url.replace(rurlData, function (m, key) {
+			if (key in data) {
+				mappedKeys.push(key);
+				return data[key];
+			}
+		});
+
 
            
   	
