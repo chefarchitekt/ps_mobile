@@ -3,7 +3,7 @@ import {
   ScrollView
 } from 'react-native';
 import { List, ListItem } from 'react-native-elements';
-import { users } from '../locals/mockData';
+import { users } from '../../../data/locals/mockData';
 
 class Feed extends Component {
   onLearnMore = (user) => {

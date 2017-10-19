@@ -1,39 +1,43 @@
-import React { Component } from 'react';
-import  { Button, Text, FormInput, FormLabel  } from 'react-native-elements';
+import React, { Component } from 'react';
+import { View  } from 'react-native';
+import { Card, Button, FormLabel, FormInput, FormValidationMessage } from 'react-native-elements';
 
 class LoginForm extends Component {
+    
     render() {
+        const testError = 'test error';
+        //we could use card here instead of view
         return (
             <View>
-                <FormLabel >UserName</FormLabel>
+                <FormLabel >User Name</FormLabel>
                 <FormInput 
-                    
+                    placeholder="username..." 
+                    autoCorrect={false}
                 />
-                <FormValidationMessage>
-                {}
-                </FormValidationMessage>
-            </View>
+                <FormValidationMessage>{}</FormValidationMessage>
 
+                <FormLabel >Password</FormLabel>
+                <FormInput 
+                    secureTextEntry 
+                    placeholder="password..." 
+                />
+                <FormValidationMessage>{}</FormValidationMessage>
+
+                <FormLabel >Account Name</FormLabel>
+                <FormInput 
+                    placeholder="account name..." 
+                    autoCorrect={false}
+                />
+                <FormValidationMessage>{}</FormValidationMessage>
+
+                <Button
+                    buttonStyle={{ marginTop: 20 }}
+                    backgroundColor="#03A9F4"
+                    title="SIGN IN"
+                />
+            </View>
         );
     }
 }
 
-
-const styles = StyleSheet.create({
-    headingContainer: {
-      justifyContent: 'center',
-      alignItems: 'center',
-      padding: 40,
-      backgroundColor: colors.secondary2,
-    },
-    heading: {
-      color: 'white',
-      marginTop: 10,
-      fontSize: 22,
-    },
-    labelContainerStyle: {
-      marginTop: 8,
-    },
-  });
-
-export default LoginForm;
+export { LoginForm };

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { ScrollView } from 'react-native';
 import { Tile, List, ListItem, Button } from 'react-native-elements';
-import { me } from '../locals/mockData';
+import { me } from '../../../data/locals/mockData';
 
 class Me extends Component {
   handleSettingsPress = () => {
