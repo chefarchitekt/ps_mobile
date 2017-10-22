@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
-import { Root } from './AppRouter';
+import { RootNavigator } from './AppRouter';
 
 
 class App extends Component {
     render() {
+    const isSignIn = true;
+    const Layout = RootNavigator(isSignIn);
+
         return (
-            <Root />
+            <Layout />
         );
     }
 }

@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import { Text } from 'react-native-elements';
 
 
-class ConferenceOutScreen extends Component {
+class MessageDetailScreen extends Component {
     render() {
         return (
-            <Text h2>Conference Outing</Text>
+            <Text h2>Message Detail</Text>
         );
     }
 }
 
-export default ConferenceOutScreen;
+export default MessageDetailScreen;

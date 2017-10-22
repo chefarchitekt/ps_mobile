@@ -3,27 +3,27 @@ import { View } from 'react-native';
 import { Text, Icon, Divider } from 'react-native-elements';
 
 
-class CallListScreen extends Component {
+class SettingsScreen extends Component {
     static navigationOptions = ({ navigation }) => {
         const { navigate, state, setParams } = navigation;
         return {
-          title: 'Call Logs',
+          title: 'Settings',
           headerRight: (
             <View style={{ flexDirection: 'row' }}>
                 <Icon 
-                    name='settings'
-                    type='MaterialCommunityIcons'
+                    name='edit'
+                    type='Feather'
                     size={26}
                     color='orange'
-                    onPress={() => navigate('Settings')} 
+                    //onPress={() => navigate('Settings')} 
                 />
                 <Divider color='white' height={26} width={26} />
                 <Icon 
-                    name='help'
+                    name='home'
                     type='MaterialCommunityIcons'
                     size={26}
                     color='orange'
-                    onPress={() => navigate('Help')} 
+                    onPress={() => navigate('Main')} 
                 />
                 <Divider color='white' height={26} width={26} />
             </View>
@@ -32,9 +32,9 @@ class CallListScreen extends Component {
       };
     render() {
         return (
-            <Text h2>Call List</Text>
+            <Text h2>Settings</Text>
         );
     }
 }
 
-export default CallListScreen;
+export default SettingsScreen;
