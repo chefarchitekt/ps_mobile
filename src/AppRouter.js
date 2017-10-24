@@ -153,7 +153,7 @@ export const MainTabs = TabNavigator({
   },
 });
 
-export const RootNavigator = (isSignedIn) => {
+export const RootNavigator = (isAuthenticated) => {
   return StackNavigator({
     Authentication: {
       screen: AuthStack
@@ -170,6 +170,6 @@ export const RootNavigator = (isSignedIn) => {
   }, {
     mode: 'modal',
     headerMode: 'none',
-    initialRouteName: isSignedIn ? 'Main' : 'Authentication'
+    initialRouteName: isAuthenticated ? 'Main' : 'Authentication'
   });
 };

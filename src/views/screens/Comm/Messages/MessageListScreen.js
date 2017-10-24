@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
 import { Text, Icon, Divider } from 'react-native-elements';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+
+import { isSignIn } from '../../../../services/storageServices';
+import { userReloginRequest } from '../../../../process/actions/auth/loginActions';
 
 class MessageListScreen extends Component {
     static navigationOptions = ({ navigation }) => {
@@ -29,8 +34,16 @@ class MessageListScreen extends Component {
             ),
         };
       };
+    
+    componentWillMount() {
+        const isAuthenticated = isSignIn();
+        if (isAuthenticated) {
+            this.props.userReloginRequest();
+        }
+    }
+       
     render() {
-        return (
+       return (
             <View>
                 <Text h2>Message List</Text>
                 <Text h2>Message List</Text>
@@ -41,4 +54,18 @@ class MessageListScreen extends Component {
     }
 }
 
-export default MessageListScreen;
+const mapStateToProps = (state) => {
+    const userLogin = state.userLogin;
+
+    return {
+        userLogin
+    };
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return bindActionCreators({
+        userReloginRequest
+    }, dispatch);
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(MessageListScreen);

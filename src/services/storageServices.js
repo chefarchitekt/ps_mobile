@@ -62,3 +62,19 @@ export const getCredentialData = async () => {
         console.log(errorMsg);
     }
   };
+
+  export const isSignIn = async () => {
+    await getCredentialData().then((jsonStoredCredential) => {
+        console.log('APP: CREDENTIAL DATA: ');
+        console.log(jsonStoredCredential);
+
+        const storedCredential = JSON.parse(jsonStoredCredential);
+
+        if (storedCredential !== null && storedCredential.isAuthenticated === true) {
+            return true;
+        }             
+    }).catch(error => {
+        console.log(error.message);
+    });
+    return false;
+};

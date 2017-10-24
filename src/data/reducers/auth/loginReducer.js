@@ -37,9 +37,21 @@ export default (state = INITIAL_STATE, action) => {
         case SERVER_LOGIC_ERRORS:
             return { ...state, input_errors: action.payload, isLoading: false, httpStatus: 'failed' };
         case LOGIN_USER_SUCCESS:
-            return { ...state, UserPassword: '', isLoading: false, httpStatus: 'success' };
+            return { 
+                ...state, 
+                UserName: action.payload.formLoginData.UserName,
+                UserPassword: '', 
+                KazooAccountName: action.payload.formLoginData.KazooAccountName,
+                isAuthenticated: true,
+                isLoading: false, 
+                httpStatus: 'success' 
+            };
         case SET_CURRENT_USER:
-            return { ...state, isAuthenticated: true, user: action.payload.user };
+            return { 
+                ...state, 
+                isAuthenticated: true, 
+                user: action.payload 
+            };
         case USER_SIGNOUT:
             return { ...INITIAL_STATE, isAuthenticated: false, user: {} };
         default:

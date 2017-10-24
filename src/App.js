@@ -7,26 +7,10 @@ import ReduxThunk from 'redux-thunk';
 import { RootNavigator } from './AppRouter';
 import rootReducer from './data/reducers/rootReducer';
 import { 
-    getCredentialData
+    isSignIn
 } from './services/storageServices';
 
 class App extends Component {
-    isSignIn = async () => {
-        await getCredentialData().then((jsonStoredCredential) => {
-            console.log('APP: CREDENTIAL DATA: ');
-            console.log(jsonStoredCredential);
-
-            const storedCredential = JSON.parse(jsonStoredCredential);
-
-            if (storedCredential !== null && storedCredential.isAuthenticated === true) {
-                return true;
-            }             
-        }).catch(error => {
-            console.log(error.message);
-        });
-        return false;
-    };
-
     
     render() {
     //const store = createStore(rootReducer, {}, applyMiddleware(ReduxThunk));
@@ -40,7 +24,7 @@ class App extends Component {
         )
     );
     
-    const signInStatus = this.isSignIn();
+    const signInStatus = isSignIn();
     console.log('APP: SIGNIN STATUS: ');
     console.log(signInStatus);
     const Layout = RootNavigator(signInStatus);

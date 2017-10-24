@@ -1,6 +1,7 @@
 import {
     LOGIN_USER_PROGRESS, 
     LOGIN_USER_SUCCESS, 
+    USER_RELOGIN_PROGRESS,
     LOGIN_INPUT,
     SET_CURRENT_USER,
     USER_SIGN_OUT
@@ -40,29 +41,51 @@ export const loginInputError = (errors) => {
 };
 
 export const userReloginRequest = () => {
+    console.log('RELOGIN STARTED');
+    return (dispatch) => {
     getCredentialData()
-        .then((storedCredentials) => {
-            userLoginRequest(storedCredentials);
+        .then((jsonStoredCredentials) => {
+            const storedCredentials = (({ UserName, UserPassword, KazooAccountName }) => ({ UserName, UserPassword, KazooAccountName }))(JSON.parse(jsonStoredCredentials));
+            console.log('RELOGIN storedCredential');
+            console.log(storedCredentials);
+            //destructure to get reduced proper object
+            //const { UserName, UserPassword, KazooAccountName } = storedCredentials;
+            //userLoginRequest({ UserName, UserPassword, KazooAccountName });
+
+            console.log('USER RELOGIN STARTED');
+            const encodedLoginData = Object.keys(storedCredentials)
+                .map(key => encodeURIComponent(key) + '=' + encodeURIComponent(storedCredentials[key]))
+                .join('&');
+
+                console.log('action: formBody');
+                console.log(encodedLoginData);
+            
+            
+                accountLoginAsync(dispatch, encodedLoginData, storedCredentials);
+                dispatch({ type: USER_RELOGIN_PROGRESS });
+            
         })
         .catch(error => {
             const errorMsg = 'AsyncStorage Error: ' + error.message;
             console.log(errorMsg);
         }); 
+    };
 };
 
 export const userLoginRequest = (formLoginData) => {
+    console.log('USER LOGIN STARTED');
     const encodedLoginData = Object.keys(formLoginData)
         .map(key => encodeURIComponent(key) + '=' + encodeURIComponent(formLoginData[key]))
         .join('&');
-    /*
+    
         console.log('action: loginData');
         console.log(formLoginData);
         console.log('action: formBody');
-        console.log(formBody);
-    */
+        console.log(encodedLoginData);
+    
     return (dispatch) => {
-        dispatch({ type: LOGIN_USER_PROGRESS });
         accountLoginAsync(dispatch, encodedLoginData, formLoginData);
+        dispatch({ type: LOGIN_USER_PROGRESS });
     };
 };
 
@@ -94,7 +117,7 @@ const accountLoginAsync = (dispatch, encodedLoginData, formLoginData) => {
   const loginUserSuccess = (dispatch, formLoginData, responseData) => {
     dispatch({
          type: LOGIN_USER_SUCCESS,
-         payload: responseData
+         payload: { formLoginData, responseData }
      });
  };
  
@@ -117,8 +140,7 @@ const accountLoginAsync = (dispatch, encodedLoginData, formLoginData) => {
     console.log('setCurrentUser: formLoginData');
     console.log(formLoginData);
     console.log('setCurrentUser: userToken');
-    console.log(userData.AccessToken);
-     setAuthorizationToken(user.AccessToken);
+    console.log(userData.AccessToken); 
 
      const authenticatedCredential = { ...formLoginData, isAuthenticated: true };
      const jsonCredentialData = JSON.stringify(authenticatedCredential);
@@ -133,6 +155,9 @@ const accountLoginAsync = (dispatch, encodedLoginData, formLoginData) => {
      console.log(jsonCredentialData);
 
      saveProfileData(jsonUserData);
+
+     const tokenData = userData.AccessToken;
+     setAuthorizationToken(tokenData);
 
      dispatch({
         type: SET_CURRENT_USER,
