@@ -1,17 +1,29 @@
 import {
     LOGIN_USER_PROGRESS,
     LOGIN_USER_SUCCESS,
-    LOGIN_INPUT
+    LOGIN_INPUT,
+    SET_CURRENT_USER,
+    USER_SIGNOUT
 } from '../../../process/types/appTypes';
 
 import {
-    HTTP_ERRORS,
     CLIENT_LOGIC_ERRORS,
     SERVER_LOGIC_ERRORS
 } from '../../../process/types/commonTypes';
 
 const INITIAL_STATE = {
-
+    UserName: '',
+    UserPassword: '',
+    KazooAccountName: '',
+    IsPersistent: true,
+    isLoading: false,
+    input_errors: {
+        UserName: '',
+        UserPassword: '',
+        KazooAccountName: ''
+    },
+    isAuthenticated: false,
+    user: {}
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -25,7 +37,11 @@ export default (state = INITIAL_STATE, action) => {
         case SERVER_LOGIC_ERRORS:
             return { ...state, input_errors: action.payload, isLoading: false, httpStatus: 'failed' };
         case LOGIN_USER_SUCCESS:
-            return { ...INITIAL_STATE, isLoading: false, httpStatus: 'success' };
+            return { ...state, UserPassword: '', isLoading: false, httpStatus: 'success' };
+        case SET_CURRENT_USER:
+            return { ...state, isAuthenticated: true, user: action.payload.user };
+        case USER_SIGNOUT:
+            return { ...INITIAL_STATE, isAuthenticated: false, user: {} };
         default:
             return { ...state, isLoading: false };
     }

@@ -3,6 +3,8 @@
     "rules": {
         "arrow-body-style": "off",
         "max-len": "off",
-        "quote-props": "off"
+        "quote-props": "off",
+        "quotes": "off",
+        "prefer-template": "off"
     }
 }

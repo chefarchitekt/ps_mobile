@@ -27,5 +27,5 @@ class SignupForm extends Component {
     }
 }
 
-export { SignupForm };
+export default SignupForm;
 

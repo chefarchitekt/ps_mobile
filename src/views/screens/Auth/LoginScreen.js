@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
-import { LoginForm } from '../../components/specific';
+import LoginForm from '../../components/specific/Auth/LoginForm';
 import { Spinner, ScreenLogo, SignupSection } from '../../components/common';
 import { mobileMetrics } from '../../../views/config';
 
