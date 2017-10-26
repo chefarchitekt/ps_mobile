@@ -4,3 +4,5 @@ export const USER_RELOGIN_PROGRESS = 'user_relogin_progress';
 export const LOGIN_INPUT = 'login_input';
 export const SET_CURRENT_USER = 'set_current_user';
 export const USER_SIGN_OUT = 'user_sign_out';
+export const STORED_CREDENTIAL_EXIST = 'stored_credential_exist';
+export const STORED_CREDENTIAL_EMPTY = 'stored_credential_empty';

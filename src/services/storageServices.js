@@ -9,21 +9,30 @@ import {
 export const getCredentialData = async () => {
     try {
         const asyncData = await AsyncStorage.getItem(PS_CREDENTIALS);
-        return asyncData;
+        if (asyncData !== null) {
+            return asyncData;
+         } else {
+            return null;
+        }
     } catch (error) {
         const errorMsg = 'AsyncStorage error: ' + error;
         console.log(errorMsg);
-        throw new Error(errorMsg);
+        //throw new Error(error);
     }
   };
 
   export const getProfileData = async () => {
     try {
         const asyncData = await AsyncStorage.getItem(PS_USER_PROFILE);
-        return asyncData;
+        if (asyncData !== null) {
+            return asyncData;
+         } else {
+            return null;
+        }
     } catch (error) {
         const errorMsg = 'AsyncStorage error: ' + error;
-        throw new Error(errorMsg);
+        console.log(errorMsg);
+        //throw new Error(error);
     }
   };
   
@@ -33,6 +42,7 @@ export const getCredentialData = async () => {
     } catch (error) {
         const errorMsg = 'AsyncStorage error: ' + error;
         console.log(errorMsg);
+        //throw new Error(error);
     }
   };
 
@@ -42,6 +52,7 @@ export const getCredentialData = async () => {
     } catch (error) {
         const errorMsg = 'AsyncStorage error: ' + error;
         console.log(errorMsg);
+        //throw new Error(error);
     }
   };
 
@@ -51,6 +62,7 @@ export const getCredentialData = async () => {
     } catch (error) {
         const errorMsg = 'AsyncStorage error: ' + error;
         console.log(errorMsg);
+        //throw new Error(error);
     }
   };
 
@@ -60,21 +72,21 @@ export const getCredentialData = async () => {
     } catch (error) {
         const errorMsg = 'AsyncStorage error: ' + error;
         console.log(errorMsg);
+        //throw new Error(error);
     }
   };
 
   export const isSignIn = async () => {
-    await getCredentialData().then((jsonStoredCredential) => {
-        console.log('APP: CREDENTIAL DATA: ');
-        console.log(jsonStoredCredential);
+    const jsonStoredCredential = await getCredentialData();
 
+    if (jsonStoredCredential !== null) {
         const storedCredential = JSON.parse(jsonStoredCredential);
-
-        if (storedCredential !== null && storedCredential.isAuthenticated === true) {
+        
+        if (storedCredential.isAuthenticated !== null && storedCredential.isAuthenticated === true) {
             return true;
-        }             
-    }).catch(error => {
-        console.log(error.message);
-    });
-    return false;
+        } 
+        return false;
+    } else {
+        return false;
+    }
 };

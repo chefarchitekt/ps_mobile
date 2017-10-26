@@ -3,6 +3,7 @@ import { Platform } from 'react-native';
 import { TabNavigator, StackNavigator } from 'react-navigation';
 import FeatherIcon from 'react-native-vector-icons/Feather';
 
+
 //import screens
 import LoginScreen from './views/screens/Auth/LoginScreen';
 import SignupScreen from './views/screens/Auth/SignupScreen';
@@ -21,6 +22,7 @@ import DirectoryListScreen from './views/screens/Contact/DirectoryListScreen';
 import DirectoryDetailScreen from './views/screens/Contact/DirectoryDetailScreen';
 
 import GuideScreen from './views/screens/Help/GuideScreen';
+
 
 export const AuthStack = StackNavigator({
   NavLogin: {
@@ -153,7 +155,28 @@ export const MainTabs = TabNavigator({
   },
 });
 
-export const RootNavigator = (isAuthenticated) => {
+export const Routes = StackNavigator({
+    Authentication: {
+      screen: AuthStack
+    },
+    Main: {
+      screen: MainTabs
+    },
+    Settings: {
+      screen: SettingsStack
+    },
+    Help: {
+      screen: HelpStack
+    }
+  }, {
+    mode: 'modal',
+    headerMode: 'none',
+    initialRouteName: 'Main'
+});
+
+
+/*
+export const Routes = (isAuthenticated) => {
   return StackNavigator({
     Authentication: {
       screen: AuthStack
@@ -173,3 +196,5 @@ export const RootNavigator = (isAuthenticated) => {
     initialRouteName: isAuthenticated ? 'Main' : 'Authentication'
   });
 };
+*/
+

@@ -5,6 +5,7 @@
         "max-len": "off",
         "quote-props": "off",
         "quotes": "off",
-        "prefer-template": "off"
+        "prefer-template": "off",
+        "no-else-return": "off"
     }
 }

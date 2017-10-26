@@ -4,7 +4,9 @@ import {
     USER_RELOGIN_PROGRESS,
     LOGIN_INPUT,
     SET_CURRENT_USER,
-    USER_SIGN_OUT
+    USER_SIGN_OUT,
+    STORED_CREDENTIAL_EXIST,
+    STORED_CREDENTIAL_EMPTY
 } from '../../../process/types/appTypes';
 
 import {
@@ -40,30 +42,57 @@ export const loginInputError = (errors) => {
     });
 };
 
+export const checkAuthenticationStatus = () => {
+    return (dispatch) => {
+        getCredentialData().then((jsonStoredCredentials) => {
+            if (jsonStoredCredentials !== null) {
+                const storedCredentials = (({ UserName, UserPassword, KazooAccountName }) => ({ 
+                    UserName, 
+                    UserPassword, 
+                    KazooAccountName }))(JSON.parse(jsonStoredCredentials));
+                dispatch({
+                    type: STORED_CREDENTIAL_EXIST,
+                    payload: { storedCredentials }
+                });
+            } else {
+                dispatch({
+                    type: STORED_CREDENTIAL_EMPTY
+                });
+            }
+        })
+        .catch(error => {
+            const errorMsg = 'AsyncStorage Error: ' + error.message;
+            console.log(errorMsg);
+        }); 
+    };
+};
+
 export const userReloginRequest = () => {
     console.log('RELOGIN STARTED');
     return (dispatch) => {
     getCredentialData()
         .then((jsonStoredCredentials) => {
-            const storedCredentials = (({ UserName, UserPassword, KazooAccountName }) => ({ UserName, UserPassword, KazooAccountName }))(JSON.parse(jsonStoredCredentials));
-            console.log('RELOGIN storedCredential');
-            console.log(storedCredentials);
-            //destructure to get reduced proper object
-            //const { UserName, UserPassword, KazooAccountName } = storedCredentials;
-            //userLoginRequest({ UserName, UserPassword, KazooAccountName });
 
-            console.log('USER RELOGIN STARTED');
-            const encodedLoginData = Object.keys(storedCredentials)
-                .map(key => encodeURIComponent(key) + '=' + encodeURIComponent(storedCredentials[key]))
-                .join('&');
-
-                console.log('action: formBody');
-                console.log(encodedLoginData);
-            
-            
-                accountLoginAsync(dispatch, encodedLoginData, storedCredentials);
-                dispatch({ type: USER_RELOGIN_PROGRESS });
-            
+            if (jsonStoredCredentials !== null) {
+                const storedCredentials = (({ UserName, UserPassword, KazooAccountName }) => ({ UserName, UserPassword, KazooAccountName }))(JSON.parse(jsonStoredCredentials));
+                console.log('RELOGIN storedCredential');
+                console.log(storedCredentials);
+                //destructure to get reduced proper object
+                //const { UserName, UserPassword, KazooAccountName } = storedCredentials;
+                //userLoginRequest({ UserName, UserPassword, KazooAccountName });
+    
+                console.log('USER RELOGIN STARTED');
+                const encodedLoginData = Object.keys(storedCredentials)
+                    .map(key => encodeURIComponent(key) + '=' + encodeURIComponent(storedCredentials[key]))
+                    .join('&');
+    
+                    console.log('action: formBody');
+                    console.log(encodedLoginData);
+                
+                
+                    accountLoginAsync(dispatch, encodedLoginData, storedCredentials);
+                    dispatch({ type: USER_RELOGIN_PROGRESS });        
+            }
         })
         .catch(error => {
             const errorMsg = 'AsyncStorage Error: ' + error.message;
@@ -89,7 +118,7 @@ export const userLoginRequest = (formLoginData) => {
     };
 };
 
-
+//dispatch need to be passed as this is private function and no way redux store can inject dispatch function to the return object
 const accountLoginAsync = (dispatch, encodedLoginData, formLoginData) => {
     console.log('action: encodedLoginData');
     console.log(encodedLoginData);
@@ -115,10 +144,10 @@ const accountLoginAsync = (dispatch, encodedLoginData, formLoginData) => {
   };
 
   const loginUserSuccess = (dispatch, formLoginData, responseData) => {
-    dispatch({
-         type: LOGIN_USER_SUCCESS,
-         payload: { formLoginData, responseData }
-     });
+        dispatch({
+            type: LOGIN_USER_SUCCESS,
+            payload: { formLoginData, responseData }
+        });
  };
  
  const loginUserFailed = (dispatch, errorData) => {
@@ -166,7 +195,7 @@ const accountLoginAsync = (dispatch, encodedLoginData, formLoginData) => {
   };
   
   export const userLogoutRequest = () => {
-    return dispatch => {
+    return (dispatch) => {
       removeCredentialData();
       removeProfileData();
       setAuthorizationToken(false);

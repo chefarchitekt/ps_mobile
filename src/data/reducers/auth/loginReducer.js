@@ -3,7 +3,9 @@ import {
     LOGIN_USER_SUCCESS,
     LOGIN_INPUT,
     SET_CURRENT_USER,
-    USER_SIGNOUT
+    USER_SIGNOUT,
+    STORED_CREDENTIAL_EXIST,
+    STORED_CREDENTIAL_EMPTY
 } from '../../../process/types/appTypes';
 
 import {
@@ -52,6 +54,18 @@ export default (state = INITIAL_STATE, action) => {
                 isAuthenticated: true, 
                 user: action.payload 
             };
+        case STORED_CREDENTIAL_EXIST:
+            return { 
+                ...state, 
+                UserName: action.payload.storedCredentials.UserName,
+                UserPassword: '', 
+                KazooAccountName: action.payload.storedCredentials.KazooAccountName,
+                isAuthenticated: true,
+                isLoading: false, 
+                httpStatus: 'success' 
+            };
+        case STORED_CREDENTIAL_EMPTY:
+        return { ...INITIAL_STATE, isAuthenticated: false, user: {} };
         case USER_SIGNOUT:
             return { ...INITIAL_STATE, isAuthenticated: false, user: {} };
         default:

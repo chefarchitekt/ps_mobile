@@ -7,7 +7,6 @@ import { mobileMetrics } from '../../../views/config';
 const DEVICE_WIDTH = mobileMetrics.DEVICE_WIDTH;
 
 class LoginScreen extends Component {
-    
 
     handlePressForSignup = () => {
         this.props.navigation.navigate('NavSignup');
@@ -18,7 +17,7 @@ class LoginScreen extends Component {
     };
 
     renderContent = () => {
-        return (<LoginForm />);
+        return (<LoginForm {...this.props} />);
     };
 
     render() {

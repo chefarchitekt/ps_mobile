@@ -22,6 +22,15 @@ class LoginForm extends Component {
     }
     */
 
+    componentDidUpdate() {
+        const isAuthenticated = this.props.isAuthenticated;
+        console.log('LOGIN FORM isAuth status ' + isAuthenticated);
+        const { navigation } = this.props;
+        if (isAuthenticated) {
+            navigation.navigate('Main');
+        }
+    }
+
     onSubmit(e) {
         const { 
             UserName, 
@@ -45,9 +54,10 @@ class LoginForm extends Component {
         console.log('ISVALID VALUE');
         console.log(this.isValid());
 
-
         if (this.isValid) {
             this.props.userLoginRequest(loginData);
+            const { navigation } = this.props;
+            navigation.navigate('Main');
         }
     }
 
@@ -68,8 +78,10 @@ class LoginForm extends Component {
 
         return isValid;
     }
+
     render() {
         console.log(this.props);
+        
         const inputErrors = this.props.input_errors;
         //we could use card here instead of view
         return (
@@ -119,6 +131,7 @@ const mapStateToProps = (state) => {
         UserPassword, 
         KazooAccountName, 
         IsPersistent, 
+        isAuthenticated,
         isLoading,
         input_errors,
         server_errors
@@ -128,6 +141,7 @@ const mapStateToProps = (state) => {
         UserName, 
         UserPassword, 
         KazooAccountName, 
+        isAuthenticated,
         IsPersistent, 
         isLoading,
         input_errors,
