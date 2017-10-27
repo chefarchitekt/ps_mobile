@@ -133,8 +133,14 @@ const accountLoginAsync = (dispatch, encodedLoginData, formLoginData) => {
       .then((responseJson) => {
             console.log('action: responseData');
             console.log(responseJson);
-            loginUserSuccess(dispatch, formLoginData, responseJson);
-            setCurrentUser(dispatch, formLoginData, responseJson.Record);
+            if (responseJson.Status === 'Error') {
+                loginUserFailed(dispatch, responseJson.Record);
+                httpErrorDetail(dispatch, responseJson.Record); // response.Record = 'Api Error'
+            } else {
+                loginUserSuccess(dispatch, formLoginData, responseJson);
+                setCurrentUser(dispatch, formLoginData, responseJson.Record);
+            }
+            
         })
       .catch((error) => {
             console.log(JSON.stringify(error.response.data));

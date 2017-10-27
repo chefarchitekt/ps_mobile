@@ -3,7 +3,7 @@ import {
     LOGIN_USER_SUCCESS,
     LOGIN_INPUT,
     SET_CURRENT_USER,
-    USER_SIGNOUT,
+    USER_SIGN_OUT,
     STORED_CREDENTIAL_EXIST,
     STORED_CREDENTIAL_EMPTY
 } from '../../../process/types/appTypes';
@@ -66,7 +66,7 @@ export default (state = INITIAL_STATE, action) => {
             };
         case STORED_CREDENTIAL_EMPTY:
         return { ...INITIAL_STATE, isAuthenticated: false, user: {} };
-        case USER_SIGNOUT:
+        case USER_SIGN_OUT:
             return { ...INITIAL_STATE, isAuthenticated: false, user: {} };
         default:
             return { ...state, isLoading: false };
