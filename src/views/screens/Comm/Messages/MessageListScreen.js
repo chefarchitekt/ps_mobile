@@ -45,7 +45,11 @@ class MessageListScreen extends Component {
         };
       };
 
-      
+      constructor(props) {
+          super(props);
+          this.onLogout = this.onLogout.bind(this);
+      }
+
       componentDidMount() {
         this.props.navigation.setParams({ logOut: this.onLogout });
       }
