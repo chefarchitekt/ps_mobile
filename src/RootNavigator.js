@@ -42,7 +42,7 @@ export const FlashLandingStack = StackNavigator({
   NavLanding: {
     screen: FlashLandingScreen
   }
-});
+}, { headerMode: 'none' });
 
 export const DashboardStack = StackNavigator({
   NavDashboard: {
@@ -119,7 +119,7 @@ export const MainTabs = TabNavigator({
     screen: DashboardStack,
     navigationOptions: {
       tabBarLabel: 'Dashboard',
-      tabBarIcon: ({ tintColor }) => <FeatherIcon name='message-circle' size={26} style={{ color: tintColor }} />   
+      tabBarIcon: ({ tintColor }) => <FeatherIcon name='airplay' size={26} style={{ color: tintColor }} />   
     }
   },
   NavCalls: {
@@ -193,28 +193,3 @@ export const Routes = StackNavigator({
     headerMode: 'none',
     initialRouteName: 'Landing'
 });
-
-
-/*
-export const Routes = (isAuthenticated) => {
-  return StackNavigator({
-    Authentication: {
-      screen: AuthStack
-    },
-    Main: {
-      screen: MainTabs
-    },
-    Settings: {
-      screen: SettingsStack
-    },
-    Help: {
-      screen: HelpStack
-    }
-  }, {
-    mode: 'modal',
-    headerMode: 'none',
-    initialRouteName: isAuthenticated ? 'Main' : 'Authentication'
-  });
-};
-*/
-

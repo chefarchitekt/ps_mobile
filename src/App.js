@@ -1,13 +1,17 @@
 import '../reactotron-config';
 
 import React, { Component } from 'react';
+import { BackHandler } from 'react-native';
 import { Provider } from 'react-redux';
 import { createStore, compose, applyMiddleware } from 'redux';
 import ReduxThunk from 'redux-thunk';
 import { Routes } from './RootNavigator';
+import { NavigationActions } from 'react-navigation';
 import rootReducer from './data/reducers/rootReducer';
 import { checkAuthenticationStatus } from './process/actions/auth/loginActions';
 
+
+export let navigationRef;
 class App extends Component {
     constructor(props) {
         super(props);
@@ -23,16 +27,32 @@ class App extends Component {
         this.store.dispatch(checkAuthenticationStatus());
         const initialState = this.store.getState();
         console.log('initialState at App constructor: ', initialState);
+        this.handleBackButton = this.handleBackButton.bind(this);
     }
 
     
+    componentDidMount() {
+        navigationRef = this.navigator;
+        BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
+    }
+    
+    componentWillUnmount() {
+        BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
+    }
+
+    handleBackButton() {
+        navigationRef.dispatch(NavigationActions.navigate({ 
+            routeName: 'Main'
+        }));
+    }
+
     render() {
         //const store = createStore(rootReducer, {}, applyMiddleware(ReduxThunk));
        
         //const AppRouter = Routes();
         return (
             <Provider store={this.store}>
-                <Routes />
+                <Routes ref={nav => { this.navigator = nav; }} />
             </Provider>
         );
     }

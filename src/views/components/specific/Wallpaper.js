@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Image } from 'react-native';
 
 import wallImg from '../../images/psWallpaper.jpg';
@@ -7,13 +7,15 @@ import { mobileMetrics } from '../../../views/config';
 const IMAGE_WIDTH = mobileMetrics.DEVICE_WIDTH;
 const IMAGE_HEIGHT = mobileMetrics.DEVICE_HEIGHT;
 
-const Wallpaper = () => {
-    return (
-        <Image style={styles.picture} source={wallImg}>
-            {this.props.children}
-        </Image>
-    );
-};
+class Wallpaper extends Component {
+    render() {
+        return (
+            <Image style={styles.picture} source={wallImg}>
+                {this.props.children}
+            </Image>
+        );
+    }  
+}
 
 const styles = {
     picture: {
@@ -24,5 +26,5 @@ const styles = {
     }
 };
 
-export { Wallpaper };
+export default Wallpaper;
 

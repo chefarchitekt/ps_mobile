@@ -1,13 +1,25 @@
 import React, { Component } from 'react';
+import { View } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { Wallpaper, FlashLogo, Spinner } from '../../components/common';
+import { FlashLogo, Spinner } from '../../components/common';
+import Wallpaper from '../../components/specific/Wallpaper';
 import { checkAuthenticationStatus } from '../../../process/actions/auth/loginActions';
 
 class FlashLandingScreen extends Component {
     
    componentDidMount() {
+    if (timerid) {
+        clearTimeout(timerid);
+      }
+      
+      const timerid = setTimeout(() => {
+        this.isAuthenticated();
+      }, 2000);
+    }
+
+    isAuthenticated() {
         const { isAuthenticated } = this.props.userLogin;
         console.log('LANDING SCREEN isAuth status ' + isAuthenticated);
         if (!isAuthenticated) {
@@ -21,7 +33,7 @@ class FlashLandingScreen extends Component {
        return (
             <Wallpaper>
                 <FlashLogo />
-                <Spinner spinnerSize={100} />                
+                <Spinner />                
             </Wallpaper>
         );
     }

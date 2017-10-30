@@ -25,6 +25,10 @@ import {
     removeProfileData 
 } from '../../../services/storageServices';
 
+import { navigationRef } from '../../../App';
+import {NavigationActions} from 'react-navigation';
+import { Routes } from '../../../RootNavigator';
+
 export const loginUserInput = ({ prop, value }) => {
     return ({ //no need for dispatch as it is not asynch
         type: LOGIN_INPUT,
@@ -153,6 +157,9 @@ const accountLoginAsync = (dispatch, encodedLoginData, formLoginData) => {
             type: LOGIN_USER_SUCCESS,
             payload: { formLoginData, responseData }
         });
+        navigationRef.dispatch(NavigationActions.navigate({ // this is react-navigation's dispatch
+            routeName: 'Main'
+        }));
  };
  
  const loginUserFailed = (dispatch, errorData) => {

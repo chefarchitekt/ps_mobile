@@ -22,6 +22,8 @@ class LoginForm extends Component {
     }
     */
 
+    /*
+
     componentDidMount() {
         const isAuthenticated = this.props.isAuthenticated;
         console.log('LOGIN FORM isAuth status ' + isAuthenticated);
@@ -30,6 +32,7 @@ class LoginForm extends Component {
             navigation.navigate('Main');
         }
     }
+    */
 
     onSubmit(e) {
         const { 
@@ -56,8 +59,8 @@ class LoginForm extends Component {
 
         if (this.isValid) {
             this.props.userLoginRequest(loginData);
-            const { navigation } = this.props;
-            navigation.navigate('Main');
+            //const { navigation } = this.props;
+            //navigation.navigate('Main');
         }
     }
 
