@@ -22,7 +22,7 @@ class LoginForm extends Component {
     }
     */
 
-    componentDidUpdate() {
+    componentDidMount() {
         const isAuthenticated = this.props.isAuthenticated;
         console.log('LOGIN FORM isAuth status ' + isAuthenticated);
         const { navigation } = this.props;

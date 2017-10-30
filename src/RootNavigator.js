@@ -191,7 +191,7 @@ export const Routes = StackNavigator({
   }, {
     mode: 'modal',
     headerMode: 'none',
-    initialRouteName: 'Main'
+    initialRouteName: 'Landing'
 });
 
 
