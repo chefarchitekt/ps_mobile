@@ -9,6 +9,10 @@ import LoginScreen from './views/screens/Auth/LoginScreen';
 import SignupScreen from './views/screens/Auth/SignupScreen';
 import SettingsScreen from './views/screens/Auth/SettingsScreen';
 
+import DashboardScreen from './views/screens/Dashboard/DashboardScreen';
+import FlashLandingScreen from './views/screens/Dashboard/FlashLandingScreen';
+import FlashLogoutScreen from './views/screens/Dashboard/FlashLogoutScreen';
+
 import MessageListScreen from './views/screens/Comm/Messages/MessageListScreen';
 import MessageDetailScreen from './views/screens/Comm/Messages/MessageDetailScreen';
 import VoiceMailListScreen from './views/screens/Comm/VoiceMail/VoiceMailListScreen';
@@ -32,6 +36,23 @@ export const AuthStack = StackNavigator({
     screen: SignupScreen
   }
 }, { headerMode: 'none' });
+
+
+export const FlashLandingStack = StackNavigator({
+  NavLanding: {
+    screen: FlashLandingScreen
+  }
+});
+
+export const DashboardStack = StackNavigator({
+  NavDashboard: {
+    screen: DashboardScreen
+  },
+  NavLogout: {
+    screen: FlashLogoutScreen
+  }
+});
+
 
 //comms navigation
 export const MessageStack = StackNavigator({
@@ -69,10 +90,7 @@ export const ContactStack = StackNavigator({
   },
   NavContactDetail: {
     screen: ContactDetailScreen
-  }
-});
-
-export const DirectoryStack = StackNavigator({
+  },
   NavDirectoryList: {
     screen: DirectoryListScreen
   },
@@ -80,7 +98,6 @@ export const DirectoryStack = StackNavigator({
     screen: DirectoryDetailScreen
   }
 });
-
 
 //to be included in every page
 export const SettingsStack = StackNavigator({
@@ -98,10 +115,24 @@ export const HelpStack = StackNavigator({
 
 //main navigation exlude settings and help
 export const MainTabs = TabNavigator({
+  NavDashboard: {
+    screen: DashboardStack,
+    navigationOptions: {
+      tabBarLabel: 'Dashboard',
+      tabBarIcon: ({ tintColor }) => <FeatherIcon name='message-circle' size={26} style={{ color: tintColor }} />   
+    }
+  },
+  NavCalls: {
+    screen: CallStack,
+    navigationOptions: {
+      tabBarLabel: 'Calls',
+      tabBarIcon: ({ tintColor }) => <FeatherIcon name='phone-call' size={26} style={{ color: tintColor }} />   
+    }
+  },
   NavMessages: {
     screen: MessageStack,
     navigationOptions: {
-      tabBarLabel: 'Message',
+      tabBarLabel: 'Messages',
       tabBarIcon: ({ tintColor }) => <FeatherIcon name='message-circle' size={26} style={{ color: tintColor }} />   
     }
   },
@@ -112,25 +143,11 @@ export const MainTabs = TabNavigator({
       tabBarIcon: ({ tintColor }) => <FeatherIcon name='voicemail' size={26} style={{ color: tintColor }} />   
     }
   },
-  NavCalls: {
-    screen: CallStack,
-    navigationOptions: {
-      tabBarLabel: 'Calls',
-      tabBarIcon: ({ tintColor }) => <FeatherIcon name='phone-call' size={26} style={{ color: tintColor }} />   
-    }
-  },
   NavContact: {
     screen: ContactStack,
     navigationOptions: {
       tabBarLabel: 'Contact',
       tabBarIcon: ({ tintColor }) => <FeatherIcon name='users' size={26} style={{ color: tintColor }} />   
-    }
-  },
-  NavDirectory: {
-    screen: DirectoryStack,
-    navigationOptions: {
-      tabBarLabel: 'Directory',
-      tabBarIcon: ({ tintColor }) => <FeatherIcon name='list' size={26} style={{ color: tintColor }} />   
     }
   }
 }, {
@@ -156,6 +173,9 @@ export const MainTabs = TabNavigator({
 });
 
 export const Routes = StackNavigator({
+    Landing: {
+      screen: FlashLandingStack
+    },
     Authentication: {
       screen: AuthStack
     },

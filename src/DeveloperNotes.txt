@@ -1,0 +1,3 @@
+TO ADD:
+
+1. Flash Logo before transition either to login or messages.

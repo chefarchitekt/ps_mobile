@@ -1,9 +1,9 @@
 import React from 'react';
 import { View, ActivityIndicator } from 'react-native';
 
-const Spinner = ({ sizeProp }) => (
+const Spinner = ({ spinnerSize }) => (
         <View style={styles.activityStyle}>
-            <ActivityIndicator size={sizeProp || 'large'} />
+            <ActivityIndicator size={spinnerSize || 'large'} />
         </View>
    );
 

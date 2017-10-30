@@ -140,7 +140,6 @@ const accountLoginAsync = (dispatch, encodedLoginData, formLoginData) => {
                 loginUserSuccess(dispatch, formLoginData, responseJson);
                 setCurrentUser(dispatch, formLoginData, responseJson.Record);
             }
-            
         })
       .catch((error) => {
             console.log(JSON.stringify(error.response.data));
