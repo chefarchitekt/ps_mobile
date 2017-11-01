@@ -1,22 +1,20 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import { FlashLogo, Spinner } from '../../components/common';
 import Wallpaper from '../../components/specific/Wallpaper';
-import { checkAuthenticationStatus } from '../../../process/actions/auth/loginActions';
+import { userReloginRequest } from '../../../process/actions/auth/loginActions';
 
 class FlashLandingScreen extends Component {
-    
-   componentDidMount() {
-    if (timerid) {
-        clearTimeout(timerid);
-      }
-      
-      const timerid = setTimeout(() => {
-        this.isAuthenticated();
-      }, 2000);
+
+    componentDidMount() {
+        if (timerid) {
+            clearTimeout(timerid);
+        }
+        const timerid = setTimeout(() => {
+            this.isAuthenticated();
+        }, 3000);
     }
 
     isAuthenticated() {
@@ -25,31 +23,37 @@ class FlashLandingScreen extends Component {
         if (!isAuthenticated) {
             this.props.navigation.navigate('Authentication');
         } else {
-            this.props.navigation.navigate('Main');
+            this.props.userReloginRequest();
+            if (timerid) {
+                clearTimeout(timerid);
+            }
+            const timerid = setTimeout(() => {
+                this.props.navigation.navigate('Main');
+            }, 3000);
         }
     }
-      
+
     render() {
-       return (
+        return (
             <Wallpaper>
                 <FlashLogo />
-                <Spinner />                
+                <Spinner />
             </Wallpaper>
         );
     }
 }
 
 const mapStateToProps = (state) => {
-    const userLogin = state.userLogin;
+    const { userLogin } = state;
 
-    return {
-        userLogin
+    return { 
+        userLogin 
     };
 };
 
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
-        checkAuthenticationStatus
+        userReloginRequest
     }, dispatch);
 };
 

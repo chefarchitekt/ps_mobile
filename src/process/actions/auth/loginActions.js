@@ -2,14 +2,15 @@
 import { NavigationActions } from 'react-navigation';
 import { navigationRef } from '../../../App';
 
-
 import {
     LOGIN_USER_PROGRESS, 
     LOGIN_USER_SUCCESS, 
     USER_RELOGIN_PROGRESS,
     LOGIN_INPUT,
     SET_CURRENT_USER,
-    USER_SIGN_OUT
+    USER_SIGN_OUT,
+    STORED_CREDENTIAL_EXIST,
+    STORED_CREDENTIAL_EMPTY
 } from '../../../process/types/appTypes';
 
 import {
@@ -18,12 +19,7 @@ import {
     HTTP_ERRORS
 } from '../../../process/types/commonTypes';
 
-import {
-    STORED_CREDENTIAL_EXIST,
-    STORED_CREDENTIAL_EMPTY
-} from '../../../process/types/storageTypes';
-
-import setAuthorizationToken from '../../../services/httpServices';
+import { setAuthorizationToken } from '../../../services/httpServices';
 import { 
     getCredentialData, 
     //getProfileData, 
@@ -31,7 +27,7 @@ import {
     saveProfileData, 
     removeCredentialData, 
     removeProfileData 
-} from '../../../services/storageServices';
+} from '../../../services/storage/storageProfileServices';
 
 
 export const loginUserInput = ({ prop, value }) => {
@@ -81,7 +77,6 @@ export const userReloginRequest = () => {
     return (dispatch) => {
     getCredentialData()
         .then((jsonStoredCredentials) => {
-
             if (jsonStoredCredentials !== null) {
                 const storedCredentials = (({ UserName, UserPassword, KazooAccountName }) => ({ UserName, UserPassword, KazooAccountName }))(JSON.parse(jsonStoredCredentials));
                 console.log('RELOGIN storedCredential');
@@ -162,7 +157,8 @@ const accountLoginAsync = (dispatch, encodedLoginData, formLoginData) => {
             type: LOGIN_USER_SUCCESS,
             payload: { formLoginData, responseData }
         });
-        navigationRef.dispatch(NavigationActions.navigate({ // this is react-navigation's dispatch
+        // this is react-navigation's dispatch
+        navigationRef.dispatch(NavigationActions.navigate({ 
             routeName: 'Main'
         }));
  };

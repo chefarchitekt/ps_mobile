@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
-import { Grid, Row, Col, Card, Text, Button, Icon, Divider } from 'react-native-elements';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-
+import { View, Text, TouchableOpacity } from 'react-native';
+import { Icon, Divider } from 'react-native-elements';
 
 import { userLogoutRequest } from '../../../process/actions/auth/loginActions';
 
@@ -60,65 +59,60 @@ class DashboardScreen extends Component {
     }
        
     render() {
-
-        const { teamContainerStyle, callContainerStyle, msgContainerStyle, vmContainerStyle } = styles;
+        const { containerRow, containerBox, teamContainerStyle, callContainerStyle, msgContainerStyle, vmContainerStyle } = styles;
 
        return (
-            <Grid>
-                <Row size={3} containerStyle={teamContainerStyle}>
-                    <Card>
-                        <Icon
-                            name='user'
-                            type='feather'
-                            color='blue'
-                            size={100}
-                            onPress={() => console.log('hello')} 
-                        />
-                    </Card>
-                </Row>
-                <Row size={1}>
-                    <Col containerStyle={callContainerStyle}>
-                        <Card>
-                            <Icon
-                                name='phone'
-                                type='feather'
-                                color='white'
-                                size={100}
-                                onPress={() => console.log('hello')} 
-                            />
-                        </Card>
-                    </Col>
-                    <Col containerStyle={msgContainerStyle}>
-                    <Card>
-                        <Icon
-                            name='message-square'
-                            type='feather'
-                            color='white'
-                            size={100}
-                            onPress={() => console.log('hello')} 
-                        />
-                    </Card>
-                    </Col>
-                    <Col containerStyle={vmContainerStyle}>
-                    <Card>
-                        <Icon
-                            name='voicemail'
-                            type='feather'
-                            color='white'
-                            size={100}
-                            onPress={() => console.log('hello')} 
-                        />
-                    </Card>
-                    </Col>
-                </Row>                
-            </Grid>
+           <View>
+                <View style={containerRow}>
+                    <View style={[containerBox, teamContainerStyle]}>
+                        <TouchableOpacity>
+                            <View>
+                                <Text>Hello</Text>
+                            </View>
+                        </TouchableOpacity >
+                    </View>
+                </View>
+                <View style={containerRow}>
+                    <View style={[containerBox, callContainerStyle]}>
+                        <TouchableOpacity>
+                            <View>
+                                <Text>Hello</Text>
+                            </View>
+                        </TouchableOpacity >
+                    </View>
+                    <View style={[containerBox, msgContainerStyle]}>
+                        <TouchableOpacity>
+                            <View>
+                                <Text>Hello</Text>
+                            </View>
+                        </TouchableOpacity >
+                    </View>
+                    <View style={[containerBox, vmContainerStyle]}>
+                        <TouchableOpacity>
+                            <View>
+                                <Text>Hello</Text>
+                            </View>
+                        </TouchableOpacity >
+                    </View>
+                </View>
+           </View>
+            
         );
     }
 }
 
 const styles = {
+    containerRow: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'space-between'
+    },
+    containerBox: {
+        flex: 1,
+        height: 100
+    },
     teamContainerStyle: {
-        backgroundColor: 'white'
+        backgroundColor: 'blue'
     },
     callContainerStyle: {
         backgroundColor: 'green'
@@ -129,11 +123,10 @@ const styles = {
     vmContainerStyle: {
         backgroundColor: 'red'
     }
-}
+};
 
 const mapStateToProps = (state) => {
-    const userLogin = state.userLogin;
-
+    const { userLogin } = state;
     return {
         userLogin
     };

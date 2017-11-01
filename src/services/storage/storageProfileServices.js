@@ -3,8 +3,7 @@ import { AsyncStorage } from 'react-native';
 import {
     PS_CREDENTIALS,
     PS_USER_PROFILE
-
-} from '../process/types/commonTypes';
+} from '../../process/types/storageTypes';
 
 export const getCredentialData = async () => {
     try {
