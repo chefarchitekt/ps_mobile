@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 import { userLogoutRequest } from '../../../process/actions';
 //any validator
 
-class ReduxTempalteForm extends Component {
+class ReduxTemplateForm extends Component {
     constructor(props) {
         super(props);
         this.onSubmit = this.onSubmit.bind(this);
@@ -58,4 +58,4 @@ const mapDispatchToProps = (dispatch) => {
     }, dispatch);
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ReduxTempalteForm);
+export default connect(mapStateToProps, mapDispatchToProps)(ReduxTemplateForm);

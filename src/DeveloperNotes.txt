@@ -1,3 +1,5 @@
 TO ADD:
 
-1. Flash Logo before transition either to login or messages.
+1. Flash Logo before transition either to login or messages. - DONE
+2. Error Modal when server goes wrong.
+3. Use asynstorage to store data and merge when got from server.

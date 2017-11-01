@@ -6,6 +6,8 @@
         "quote-props": "off",
         "quotes": "off",
         "prefer-template": "off",
-        "no-else-return": "off"
+        "no-else-return": "off",
+        "dot-notation": "off",
+        "no-useless-escape": "off"
     }
 }

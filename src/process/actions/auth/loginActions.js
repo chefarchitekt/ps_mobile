@@ -1,12 +1,15 @@
+
+import { NavigationActions } from 'react-navigation';
+import { navigationRef } from '../../../App';
+
+
 import {
     LOGIN_USER_PROGRESS, 
     LOGIN_USER_SUCCESS, 
     USER_RELOGIN_PROGRESS,
     LOGIN_INPUT,
     SET_CURRENT_USER,
-    USER_SIGN_OUT,
-    STORED_CREDENTIAL_EXIST,
-    STORED_CREDENTIAL_EMPTY
+    USER_SIGN_OUT
 } from '../../../process/types/appTypes';
 
 import {
@@ -14,6 +17,11 @@ import {
     SERVER_LOGIC_ERRORS,
     HTTP_ERRORS
 } from '../../../process/types/commonTypes';
+
+import {
+    STORED_CREDENTIAL_EXIST,
+    STORED_CREDENTIAL_EMPTY
+} from '../../../process/types/storageTypes';
 
 import setAuthorizationToken from '../../../services/httpServices';
 import { 
@@ -25,9 +33,6 @@ import {
     removeProfileData 
 } from '../../../services/storageServices';
 
-import { navigationRef } from '../../../App';
-import {NavigationActions} from 'react-navigation';
-import { Routes } from '../../../RootNavigator';
 
 export const loginUserInput = ({ prop, value }) => {
     return ({ //no need for dispatch as it is not asynch

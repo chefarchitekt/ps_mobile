@@ -1,18 +1,18 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
-import { Text, Button, Icon, Divider } from 'react-native-elements';
+import { Grid, Row, Col, Card, Text, Button, Icon, Divider } from 'react-native-elements';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 
-import { userReloginRequest, userLogoutRequest, checkAuthenticationStatus } from '../../../process/actions/auth/loginActions';
+import { userLogoutRequest } from '../../../process/actions/auth/loginActions';
 
 class DashboardScreen extends Component {
     
     static navigationOptions = ({ navigation }) => {
         const { state, navigate } = navigation;
         return {
-          title: 'Dahsboard',
+          title: 'Dashboard',
           headerRight: (
             <View style={{ flexDirection: 'row' }}>
                 <Icon 
@@ -60,11 +60,74 @@ class DashboardScreen extends Component {
     }
        
     render() {
+
+        const { teamContainerStyle, callContainerStyle, msgContainerStyle, vmContainerStyle } = styles;
+
        return (
-            <View>
-                <Text h2>Dashboard</Text>                
-            </View>
+            <Grid>
+                <Row size={3} containerStyle={teamContainerStyle}>
+                    <Card>
+                        <Icon
+                            name='user'
+                            type='feather'
+                            color='blue'
+                            size={100}
+                            onPress={() => console.log('hello')} 
+                        />
+                    </Card>
+                </Row>
+                <Row size={1}>
+                    <Col containerStyle={callContainerStyle}>
+                        <Card>
+                            <Icon
+                                name='phone'
+                                type='feather'
+                                color='white'
+                                size={100}
+                                onPress={() => console.log('hello')} 
+                            />
+                        </Card>
+                    </Col>
+                    <Col containerStyle={msgContainerStyle}>
+                    <Card>
+                        <Icon
+                            name='message-square'
+                            type='feather'
+                            color='white'
+                            size={100}
+                            onPress={() => console.log('hello')} 
+                        />
+                    </Card>
+                    </Col>
+                    <Col containerStyle={vmContainerStyle}>
+                    <Card>
+                        <Icon
+                            name='voicemail'
+                            type='feather'
+                            color='white'
+                            size={100}
+                            onPress={() => console.log('hello')} 
+                        />
+                    </Card>
+                    </Col>
+                </Row>                
+            </Grid>
         );
+    }
+}
+
+const styles = {
+    teamContainerStyle: {
+        backgroundColor: 'white'
+    },
+    callContainerStyle: {
+        backgroundColor: 'green'
+    },
+    msgContainerStyle: {
+        backgroundColor: 'orange'
+    },
+    vmContainerStyle: {
+        backgroundColor: 'red'
     }
 }
 
@@ -78,9 +141,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
-        userReloginRequest,
         userLogoutRequest,
-        checkAuthenticationStatus
     }, dispatch);
 };
 
