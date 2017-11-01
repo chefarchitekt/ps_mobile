@@ -1,6 +1,3 @@
-import { NavigationActions } from 'react-navigation';
-import { navigationRef } from '../../../App';
-
 import {
     SELECT_CONTACT_LISTITEM,
     GET_TEAM_CONTACTS_PROGRESS,
@@ -16,15 +13,23 @@ import {
 } from '../../../process/types/appTypes';
 
 import {
-    CLIENT_LOGIC_ERRORS, 
-    SERVER_LOGIC_ERRORS,
-    HTTP_ERRORS
+    CLIENT_LOGIC_ERRORS,
+    SERVER_LOGIC_ERRORS
 } from '../../../process/types/commonTypes';
 
-export const selectContactListItem = (contactItem) => {
-    return ({ //no need for dispatch as it is not asynch
-        type: SELECT_CONTACT_LISTITEM,
-        payload: contactItem
-    });
+const INITIAL_STATE = {
+    personalContacts: [],
+    teamContacts: [],
+    activeContact: {},
+    isListItemSelected: false,
+    isLoading: false
 };
 
+export default (state = INITIAL_STATE, action) => {
+    switch (action.type) {
+        case SELECT_CONTACT_LISTITEM:
+            return { ...state, activeContact: action.payload, isListItemSelected: true };
+        default:
+            return state;
+    }
+};

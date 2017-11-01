@@ -10,6 +10,7 @@ export const STORED_CREDENTIAL_EMPTY = 'stored_credential_empty';
 export const GET_TEAM_CONTACTS_PROGRESS = 'get_team_contacts_progress';
 export const GET_TEAM_CONTACTS_SUCCESS = 'get_team_contacts_success';
 
+export const SELECT_CONTACT_LISTITEM = 'select_contact_list_item';
 export const GET_USER_CONTACTS_PROGRESS = 'get_user_contacts_progress';
 export const GET_USER_CONTACTS_SUCCESS = 'get_user_contacts_success';
 export const ADD_USER_CONTACTS_PROGRESS = 'add_user_contacts_progress';
