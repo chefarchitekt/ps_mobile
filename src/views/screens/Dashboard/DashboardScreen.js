@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { View, Modal, Text, ScrollView, TouchableOpacity } from 'react-native';
+import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
 import { List, ListItem, Icon, Divider } from 'react-native-elements';
 import VectorIcon from 'react-native-vector-icons/Feather';
+
+import ContactActionPanel from '../../../views/components/common';
 import { userLogoutRequest } from '../../../process/actions/auth/loginActions';
-import { selectContactListItem } from  '../../../process/actions/contact/contactActions';
+import { selectContactListItem } from '../../../process/actions/contact/contactActions';
 import { mobileMetrics } from '../../../views/config/';
 
 class DashboardScreen extends Component {
@@ -88,47 +90,10 @@ class DashboardScreen extends Component {
     renderControl(selectedId) {
         const { activeContact, isListItemSelected } = this.props.userContacts;
         const expanded = activeContact.id === selectedId;
-        const { navigation } = this.props;
+        //const { navigation } = this.props;
         if (isListItemSelected && expanded) {
         return (
-            <View style={styles.controlPanel.boxContainer}>
-                <View style={styles.controlPanel.boxItem}>
-                    <TouchableOpacity style={{ alignItems: 'center' }} onPress={() => navigation.navigate('NavCallDialup', { name: activeContact.name })}>
-                        <VectorIcon
-                            name='phone-call'
-                            size={26}
-                            color='green'
-                        />
-                    </TouchableOpacity>
-                </View>
-                <View style={styles.controlPanel.boxItem}>
-                    <TouchableOpacity style={{ alignItems: 'center' }} onPress={() => navigation.navigate('NavMessageList', { name: activeContact.name })}>
-                        <VectorIcon
-                            name='message-square'
-                            size={26}
-                            color='orange'
-                        />
-                    </TouchableOpacity>
-                </View>
-                <View style={styles.controlPanel.boxItem}>
-                    <TouchableOpacity style={{ alignItems: 'center' }} onPress={() => navigation.navigate('NavVoicemailList', { name: activeContact.name })}>
-                        <VectorIcon
-                            name='voicemail'
-                            size={26}
-                            color='red'
-                        />
-                    </TouchableOpacity>
-                </View>
-                <View style={styles.controlPanel.boxItem}>
-                    <TouchableOpacity style={{ alignItems: 'center' }} onPress={() => navigation.navigate('NavContactDetail', { name: activeContact.name })}>
-                        <VectorIcon
-                            name='file'
-                            size={26}
-                            color='blue'
-                        />
-                    </TouchableOpacity>
-                </View>
-            </View>
+            <ContactActionPanel panelNavigation={this.props.navigation} />
             );     
         }
     }

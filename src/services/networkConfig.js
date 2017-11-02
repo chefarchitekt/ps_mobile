@@ -1,4 +1,4 @@
-const systemConfig = {
+const networkConfig = {
     releaseType: 'Alpha',
     appStage: 'Development',
     coreApiUrl: {
@@ -63,13 +63,13 @@ const systemConfig = {
     }
 };
 
-const systemDefault = {
-    release: systemConfig.releaseType,
-    stage: systemConfig.appStage,
+const networkConfigDefault = {
+    release: networkConfig.releaseType,
+    stage: networkConfig.appStage,
     coreApiUrl: {
-        auth: systemConfig.coreApiUrl.development.auth,
-        app: systemConfig.coreApiUrl.development.app
+        auth: networkConfig.coreApiUrl.development.auth,
+        app: networkConfig.coreApiUrl.development.app
     }
 };
 
-export { systemConfig, systemDefault };
+export { networkConfig, networkConfigDefault };

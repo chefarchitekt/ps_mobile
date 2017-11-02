@@ -29,6 +29,11 @@ import {
     removeProfileData 
 } from '../../../services/storage/storageProfileServices';
 
+import { 
+    getActiveUser,
+    getTeamMember
+} from '../contact/contactActions';
+
 
 export const loginUserInput = ({ prop, value }) => {
     return ({ //no need for dispatch as it is not asynch
@@ -141,6 +146,8 @@ const accountLoginAsync = (dispatch, encodedLoginData, formLoginData) => {
                 loginUserFailed(dispatch, responseJson.Record);
                 httpErrorDetail(dispatch, responseJson.Record); // response.Record = 'Api Error'
             } else {
+                const tokenData = responseJson.Record.AccessToken;
+                setAuthorizationToken(tokenData);
                 loginUserSuccess(dispatch, formLoginData, responseJson);
                 setCurrentUser(dispatch, formLoginData, responseJson.Record);
             }
@@ -153,6 +160,8 @@ const accountLoginAsync = (dispatch, encodedLoginData, formLoginData) => {
   };
 
   const loginUserSuccess = (dispatch, formLoginData, responseData) => {
+        getActiveUser(responseData.Record);
+        //getTeamMember(responseData.Record);
         dispatch({
             type: LOGIN_USER_SUCCESS,
             payload: { formLoginData, responseData }
@@ -196,12 +205,9 @@ const accountLoginAsync = (dispatch, encodedLoginData, formLoginData) => {
      console.log('JSON_USER_DATA');
      console.log(jsonCredentialData);
 
-     saveProfileData(jsonUserData);
+    saveProfileData(jsonUserData);
 
-     const tokenData = userData.AccessToken;
-     setAuthorizationToken(tokenData);
-
-     dispatch({
+    dispatch({
         type: SET_CURRENT_USER,
         payload: userData
     });
