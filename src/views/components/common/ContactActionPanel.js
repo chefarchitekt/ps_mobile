@@ -1,15 +1,25 @@
 import React, { Component } from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 import { View, TouchableOpacity } from 'react-native';
 import VectorIcon from 'react-native-vector-icons/Feather';
 
+import { controlPanelClick } from '../../../process/actions/contact/contactActions';
+
 class ContactActionPanel extends Component {
     
-    render() {
+    handleOnPress(routeName) {
         const { navigation } = this.props.panelNavigation;
+        //not need to pass activeContact at controlPanelClick
+        this.props.controlPanelClick();
+        navigation.navigate(routeName);
+    }
+
+    render() {
         return (
-            <View style={styles.controlPanel.boxContainer}>
+        <View style={styles.controlPanel.boxContainer}>
             <View style={styles.controlPanel.boxItem}>
-                <TouchableOpacity style={{ alignItems: 'center' }} onPress={() => navigation.navigate('NavCallDialup')}>
+                <TouchableOpacity style={{ alignItems: 'center' }} onPress={() => this.handleOnPress('NavCallDialup')}>
                     <VectorIcon
                         name='phone-call'
                         size={26}
@@ -18,7 +28,7 @@ class ContactActionPanel extends Component {
                 </TouchableOpacity>
             </View>
             <View style={styles.controlPanel.boxItem}>
-                <TouchableOpacity style={{ alignItems: 'center' }} onPress={() => navigation.navigate('NavMessageList')}>
+                <TouchableOpacity style={{ alignItems: 'center' }} onPress={() => this.handleOnPress('NavMessageList')}>
                     <VectorIcon
                         name='message-square'
                         size={26}
@@ -27,7 +37,7 @@ class ContactActionPanel extends Component {
                 </TouchableOpacity>
             </View>
             <View style={styles.controlPanel.boxItem}>
-                <TouchableOpacity style={{ alignItems: 'center' }} onPress={() => navigation.navigate('NavVoicemailList')}>
+                <TouchableOpacity style={{ alignItems: 'center' }} onPress={() => this.handleOnPress('NavVoicemailList')}>
                     <VectorIcon
                         name='voicemail'
                         size={26}
@@ -36,7 +46,7 @@ class ContactActionPanel extends Component {
                 </TouchableOpacity>
             </View>
             <View style={styles.controlPanel.boxItem}>
-                <TouchableOpacity style={{ alignItems: 'center' }} onPress={() => navigation.navigate('NavContactDetail')}>
+                <TouchableOpacity style={{ alignItems: 'center' }} onPress={() => this.handleOnPress('NavContactDetail')}>
                     <VectorIcon
                         name='file'
                         size={26}
@@ -76,4 +86,10 @@ const styles = {
     }
 };
 
-export { ContactActionPanel };
+const mapDispatchToProps = (dispatch) => {
+    return bindActionCreators({
+        controlPanelClick
+    }, dispatch);
+};
+
+export default connect(null, mapDispatchToProps)(ContactActionPanel);

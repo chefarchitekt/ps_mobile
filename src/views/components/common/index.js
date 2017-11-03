@@ -4,5 +4,3 @@ export * from './ScreenLogo';
 export * from './FlashLogo';
 export * from './SignupSection';
 export * from './LoginSection';
-export * from './ContactActionPanel';
-

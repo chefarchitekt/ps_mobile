@@ -5,7 +5,7 @@ import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
 import { List, ListItem, Icon, Divider } from 'react-native-elements';
 import VectorIcon from 'react-native-vector-icons/Feather';
 
-import ContactActionPanel from '../../../views/components/common';
+import ContactActionPanel from '../../../views/components/common/ContactActionPanel';
 import { userLogoutRequest } from '../../../process/actions/auth/loginActions';
 import { selectContactListItem } from '../../../process/actions/contact/contactActions';
 import { mobileMetrics } from '../../../views/config/';
@@ -93,7 +93,7 @@ class DashboardScreen extends Component {
         //const { navigation } = this.props;
         if (isListItemSelected && expanded) {
         return (
-            <ContactActionPanel panelNavigation={this.props.navigation} />
+            <ContactActionPanel panelNavigation={this.props} />
             );     
         }
     }

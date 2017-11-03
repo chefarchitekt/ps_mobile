@@ -14,7 +14,8 @@ import {
 
 import {
     CLIENT_LOGIC_ERRORS,
-    SERVER_LOGIC_ERRORS
+    SERVER_LOGIC_ERRORS,
+    CONTROL_PANEL_CLICK
 } from '../../../process/types/commonTypes';
 
 const INITIAL_STATE = {
@@ -29,6 +30,8 @@ export default (state = INITIAL_STATE, action) => {
     switch (action.type) {
         case SELECT_CONTACT_LISTITEM:
             return { ...state, activeContact: action.payload, isListItemSelected: true };
+        case CONTROL_PANEL_CLICK:
+            return { ...state, isListItemSelected: false };
         default:
             return state;
     }

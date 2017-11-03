@@ -25,7 +25,7 @@ export const getJSON = (httpResource, urlParamsObject, successCallback, errorCal
   const httpUrl = mapUrlToDataKey(httpResource.url, urlParamsObject);
   axios.get(voipUrl + httpUrl)
   .then(response => {
-    console.log(response.data);
+    //console.log(response.data);
     if (successCallback) {
       //kazoo response for is { data: { data: {...}, node: {..}, request_id: {..}, revision: {..}, status: {..}, version: {..} }}
       successCallback(response.data);

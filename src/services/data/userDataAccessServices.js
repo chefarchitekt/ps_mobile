@@ -1,7 +1,7 @@
-import { getJSON, postJSON, putJSON, patchJSON, deleteJSON  } from '../httpServices';
+import { getJSON, postJSON, putJSON, patchJSON, deleteJSON } from '../httpServices';
 import { phoneSpeakApi } from '../httpResources';
 
-export const User = {
+const User = {
     getUser: (params, successFunc, errorFunc) => {
         const urlParams = {
             accountId: params.accountId,
@@ -17,3 +17,5 @@ export const User = {
         getJSON(phoneSpeakApi.user.list, urlParams, successFunc, errorFunc);
     }
 };
+
+export { User };

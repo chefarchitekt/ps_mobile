@@ -6,6 +6,7 @@ export const SET_CURRENT_USER = 'set_current_user';
 export const USER_SIGN_OUT = 'user_sign_out';
 export const STORED_CREDENTIAL_EXIST = 'stored_credential_exist';
 export const STORED_CREDENTIAL_EMPTY = 'stored_credential_empty';
+export const SET_TEAM_MEMBER_DETAIL = 'set_team_member_detail';
 
 export const GET_TEAM_CONTACTS_PROGRESS = 'get_team_contacts_progress';
 export const GET_TEAM_CONTACTS_SUCCESS = 'get_team_contacts_success';
