@@ -6,6 +6,7 @@ import FeatherIcon from 'react-native-vector-icons/Feather';
 
 //import screens
 import LoginScreen from './views/screens/Auth/LoginScreen';
+import AuthErrorScreen from './views/screens/Auth/AuthErrorScreen';
 import SignupScreen from './views/screens/Auth/SignupScreen';
 import SettingsScreen from './views/screens/Auth/SettingsScreen';
 
@@ -34,6 +35,9 @@ export const AuthStack = StackNavigator({
   },
   NavSignup: {
     screen: SignupScreen
+  },
+  NavAuthError: {
+    screen: AuthErrorScreen
   }
 }, { headerMode: 'none' });
 

@@ -6,31 +6,35 @@ export const SET_CURRENT_USER = 'set_current_user';
 export const USER_SIGN_OUT = 'user_sign_out';
 export const STORED_CREDENTIAL_EXIST = 'stored_credential_exist';
 export const STORED_CREDENTIAL_EMPTY = 'stored_credential_empty';
-export const SET_TEAM_MEMBER_DETAIL = 'set_team_member_detail';
+export const GET_ACTIVE_USER_SUCCESS = 'get_active_user_success';
+export const SET_ACTIVE_USER = 'set_active_user';
 
-export const GET_TEAM_CONTACTS_PROGRESS = 'get_team_contacts_progress';
 export const GET_TEAM_CONTACTS_SUCCESS = 'get_team_contacts_success';
+export const SET_TEAM_CONTACTS = 'set_team_contacts';
+export const EMPTY_TEAM_CONTACTS = 'empty_team_contacts';
+
+export const GET_TEAM_MEMBERS_DETAIL_SUCCESS = 'get_team_members_detail_success';
+export const SET_TEAM_MEMBERS_DETAIL = 'set_team_members_detail';
 
 export const SELECT_CONTACT_LISTITEM = 'select_contact_list_item';
-export const GET_USER_CONTACTS_PROGRESS = 'get_user_contacts_progress';
+export const GET_ACTIVE_CONTACT_SUCCESS = 'get_active_contact_success';
+
 export const GET_USER_CONTACTS_SUCCESS = 'get_user_contacts_success';
-export const ADD_USER_CONTACTS_PROGRESS = 'add_user_contacts_progress';
 export const ADD_USER_CONTACTS_SUCCESS = 'add_user_contacts_success';
-export const UPDATE_USER_CONTACTS_PROGRESS = 'update_user_contacts_progress';
 export const UPDATE_USER_CONTACTS_SUCCESS = 'update_user_contacts_success';
-export const DELETE_USER_CONTACTS_PROGRESS = 'delete_user_contacts_progress';
 export const DELETE_USER_CONTACTS_SUCCESS = 'delete_user_contacts_success';
 
-export const GET_MSG_LOGS_PROGRESS = 'get_msg_logs_progress';
 export const GET_MSG_LOGS_SUCCESS = 'get_msg_logs_success';
+export const SET_MSG_LOGS = 'get_msg_logs';
 export const SEND_MSG_PROGRESS = 'get_msg_progress';
 export const SEND_MSG_SUCCESS = 'get_msg_success';
 
-export const GET_CALL_LOGS_PROGRESS = 'get_call_logs_progress';
 export const GET_CALL_LOGS_SUCCESS = 'get_call_logs_success';
+export const SET_CALL_LOGS = 'set_call_logs';
 
-export const GET_VM_LOGS_PROGRESS = 'get_vm_logs_progress';
 export const GET_VM_LOGS_SUCCESS = 'get_vm_logs_success';
+export const SET_VM_LOGS = 'get_vm_logs';
+
 export const GET_VM_STREAM_PROGRESS = 'get_vm_stream_progress';
 export const GET_VM_STREAM_SUCCESS = 'get_vm_stream_success';
 export const DELETE_VM_STREAM_PROGRESS = 'delete_vm_stream_progress';

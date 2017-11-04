@@ -24,12 +24,15 @@ class FlashLandingScreen extends Component {
             this.props.navigation.navigate('Authentication');
         } else {
             this.props.userReloginRequest();
+            //no need for timer as navigation is handled at contactAction
+            /*
             if (timerid) {
                 clearTimeout(timerid);
             }
             const timerid = setTimeout(() => {
                 this.props.navigation.navigate('Main');
             }, 3000);
+            */
         }
     }
 

@@ -10,8 +10,7 @@ import {
     SET_CURRENT_USER,
     USER_SIGN_OUT,
     STORED_CREDENTIAL_EXIST,
-    STORED_CREDENTIAL_EMPTY,
-    SET_TEAM_MEMBER_DETAIL
+    STORED_CREDENTIAL_EMPTY
 } from '../../../process/types/appTypes';
 
 import {
@@ -30,11 +29,7 @@ import {
     removeProfileData 
 } from '../../../services/storage/storageProfileServices';
 
-import {
-    getKazooUserProfileStore,
-    getKazooTeamContactsStore,
-    getKazooTeamContactsDetailStore,
-        
+import {       
     removeKazooPersonalContactsStore,
     removeKazooTeamContactsDetailStore,
     removeKazooTeamContactsStore,
@@ -43,8 +38,7 @@ import {
 
 import { 
     getActiveUser,
-    getTeamMember,
-    getTeamMemberDetail
+    getTeamMember
 } from '../contact/contactActions';
 
 
@@ -176,17 +170,20 @@ const accountLoginAsync = (dispatch, encodedLoginData, formLoginData) => {
   //update team member detail should come from event listener and update on background. -future thoughts
 
   const loginUserSuccess = (dispatch, formLoginData, responseData) => {
-        getActiveUser(responseData.Record);
-        getTeamMember(responseData.Record);
+        getActiveUser(dispatch, responseData.Record);
+        getTeamMember(dispatch, responseData.Record);
         dispatch({
             type: LOGIN_USER_SUCCESS,
             payload: { formLoginData, responseData }
         });
         
-        // this is react-navigation's dispatch
+        // this is react-navigation's dispatch - 
+        //but the navigation is handled at contactActions.js
+        /*
         navigationRef.dispatch(NavigationActions.navigate({ 
             routeName: 'Main'
         }));
+        */
  };
  
  const loginUserFailed = (dispatch, errorData) => {
@@ -194,6 +191,9 @@ const accountLoginAsync = (dispatch, encodedLoginData, formLoginData) => {
          type: SERVER_LOGIC_ERRORS,
          payload: errorData
      });
+     navigationRef.dispatch(NavigationActions.navigate({ 
+        routeName: 'NavAuthError'
+    }));
  };
  
  const httpErrorDetail = (dispatch, errorDetail) => {
@@ -221,31 +221,13 @@ const accountLoginAsync = (dispatch, encodedLoginData, formLoginData) => {
     console.log(jsonCredentialData);
     console.log('JSON_USER_DATA');
     console.log(jsonCredentialData);
-
-        getKazooUserProfileStore().then((jsonUserProfile) => {
-            if (jsonUserProfile !== null) {
-                const storedProfileData = JSON.parse(jsonUserProfile);
-                console.log('STORE KAZOO USER PROFILE');
-                console.log(storedProfileData);
-                if (storedProfileData.length > 0) {
-                    setTeamMemberDetail(dispatch, storedProfileData);
-                }
-            }
-            dispatch({
-                type: SET_TEAM_MEMBER_DETAIL
-            });
-        })
-        .catch(error => {
-            const errorMsg = 'AsyncStorage Error: ' + error.message;
-            console.log(errorMsg);
-        });
-
     dispatch({
         type: SET_CURRENT_USER,
         payload: userData
     });
   };
 
+  /*
   const setTeamMemberDetail = (dispatch, storedProfileData) => {
     if (storedProfileData.length > 0) {
         getKazooTeamContactsStore().then((jsonStoredTeamData) => { //get from redux instead of storage (so slow)
@@ -271,6 +253,7 @@ const accountLoginAsync = (dispatch, encodedLoginData, formLoginData) => {
         type: SET_TEAM_MEMBER_DETAIL
     });
 };
+*/
   
   export const userLogoutRequest = () => {
     return (dispatch) => {

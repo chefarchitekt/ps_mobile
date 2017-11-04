@@ -4,3 +4,5 @@ TO ADD:
 2. Error Modal when server goes wrong.
 3. Use asynstorage to store data and merge when got from server.
 5. To take care of login failure from server. Need to have a http error screen and button to login screen.
+7. if INVALID_CREDENTIALS set to invalid_credential to true and try to getNewToken through login. 
+   if 2nd try failed, navigate to NavAuthError where there is button to relogin or contact support.

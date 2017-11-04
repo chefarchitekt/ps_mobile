@@ -10,7 +10,7 @@ const LoginSection = () => {
     return (
     <View style={styles.containerStyle}>
         <NavigationText navigationKey='NavLogin' {...this.props}>Back to Login</NavigationText>
-        <NavigationText navigationKey='NavSignupDesc'  {...this.props}>Forgot Password?</NavigationText>
+        <NavigationText navigationKey='NavSignupDesc' {...this.props}>Forgot Password?</NavigationText>
     </View>
     );
 };
