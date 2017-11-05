@@ -6,7 +6,7 @@ import VectorIcon from 'react-native-vector-icons/Feather';
 
 import { controlPanelClick } from '../../../process/actions/contact/contactActions';
 
-class ContactActionPanel extends Component {
+class DirectoryActionPanel extends Component {
     
     handleOnPress(routeName) {
         const { navigation } = this.props.panelNavigation;
@@ -27,7 +27,15 @@ class ContactActionPanel extends Component {
                     />
                 </TouchableOpacity>
             </View>
-            {/* NO NEED FOR MESSAGE ACTION */}
+            <View style={styles.controlPanel.boxItem}>
+                <TouchableOpacity style={{ alignItems: 'center' }} onPress={() => this.handleOnPress('NavMessageList')}>
+                    <VectorIcon
+                        name='message-square'
+                        size={26}
+                        color='orange'
+                    />
+                </TouchableOpacity>
+            </View>
             <View style={styles.controlPanel.boxItem}>
                 <TouchableOpacity style={{ alignItems: 'center' }} onPress={() => this.handleOnPress('NavVoicemailList')}>
                     <VectorIcon
@@ -38,7 +46,7 @@ class ContactActionPanel extends Component {
                 </TouchableOpacity>
             </View>
             <View style={styles.controlPanel.boxItem}>
-                <TouchableOpacity style={{ alignItems: 'center' }} onPress={() => this.handleOnPress('NavContactDetail')}>
+                <TouchableOpacity style={{ alignItems: 'center' }} onPress={() => this.handleOnPress('NavDirectoryDetail')}>
                     <VectorIcon
                         name='file'
                         size={26}
@@ -84,4 +92,4 @@ const mapDispatchToProps = (dispatch) => {
     }, dispatch);
 };
 
-export default connect(null, mapDispatchToProps)(ContactActionPanel);
+export default connect(null, mapDispatchToProps)(DirectoryActionPanel);

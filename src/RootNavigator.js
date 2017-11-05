@@ -88,6 +88,7 @@ export const CallStack = StackNavigator({
 
 
 //contacts navigation
+
 export const ContactStack = StackNavigator({
   NavContactList: {
     screen: ContactListScreen
@@ -102,6 +103,59 @@ export const ContactStack = StackNavigator({
     screen: DirectoryDetailScreen
   }
 });
+
+
+/* //this one produce navigation error - cannot get deeper?
+export const ContactStack = StackNavigator({
+  NavContactList: {
+    screen: ContactListTab
+  },
+  NavContactDetail: {
+    screen: ContactDetailScreen
+  },
+  NavDirectoryDetail: {
+    screen: DirectoryDetailScreen
+  }
+});
+
+export const ContactListTab = TabNavigator({
+  NavContactTabList: {
+    screen: ContactListScreen,
+    navigationOptions: {
+      tabBarLabel: 'Personal',
+      tabBarIcon: ({ tintColor }) => <FeatherIcon name='users' size={26} style={{ color: tintColor }} />   
+    }
+  },
+  NavDirectoryTabList: {
+    screen: DirectoryListScreen,
+    navigationOptions: {
+      tabBarLabel: 'Team',
+      tabBarIcon: ({ tintColor }) => <FeatherIcon name='users' size={26} style={{ color: tintColor }} />   
+    }
+  }
+}, {
+  //headerMode: 'none',        // I don't want a NavBar at top
+  tabBarPosition: 'top',  // So your Android tabs go bottom
+  tabBarOptions: {
+    activeTintColor: 'green',  // Color of tab when pressed
+    inactiveTintColor: 'grey', // Color of tab when not pressed
+    showIcon: 'true', // Shows an icon for both iOS and Android
+    showLabel: (Platform.OS !== 'android'), //No label for Android
+    labelStyle: {
+      fontSize: 11,
+    },
+    style: {
+      backgroundColor: '#fff', // Makes Android tab bar white instead of standard blue
+      height: (Platform.OS === 'ios') ? 48 : 50 // I didn't use this in my app, so the numbers may be off. 
+    },
+    scrolEnabled: true,
+    lazyLoad: true,
+    swipeEnabled: true, 
+    animationEnabled: true
+  }
+});
+
+*/
 
 //to be included in every page
 export const SettingsStack = StackNavigator({
@@ -173,7 +227,7 @@ export const MainTabs = TabNavigator({
     lazyLoad: true,
     swipeEnabled: true, 
     animationEnabled: true
-  },
+  }
 });
 
 export const Routes = StackNavigator({

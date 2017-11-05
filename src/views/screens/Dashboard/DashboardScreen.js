@@ -5,7 +5,7 @@ import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
 import { List, ListItem, Icon, Divider } from 'react-native-elements';
 import VectorIcon from 'react-native-vector-icons/Feather';
 
-import ContactActionPanel from '../../../views/components/common/ContactActionPanel';
+import DirectoryActionPanel from '../../../views/components/common/DirectoryActionPanel';
 import { userLogoutRequest } from '../../../process/actions/auth/loginActions';
 import { selectContactListItem, getActiveContact } from '../../../process/actions/contact/contactActions';
 import { mobileMetrics } from '../../../views/config/';
@@ -71,21 +71,21 @@ class DashboardScreen extends Component {
     isOnline(status) {
         if (status === 'online') {
             return {
-                name: 'phone',
+                name: 'fiber-smart-record', //'phone'
                 size: 26,
                 color: 'green'
                 
             };
         } else if (status === 'oncall') {
             return {
-                name: 'phone-in-talk',
+                name: 'fiber-smart-record', //'phone-in-talk'
                 size: 26,
                 color: 'orange'
                 
             };
         } else {
             return {
-                name: 'phone-locked',
+                name: 'fiber-smart-record', //'phone-locked'
                 size: 26,
                 color: 'red'
                 
@@ -152,7 +152,7 @@ class DashboardScreen extends Component {
         //const { navigation } = this.props;
         if (isListItemSelected && expanded) {
             return (
-                <ContactActionPanel panelNavigation={this.props} />
+                <DirectoryActionPanel panelNavigation={this.props} />
             );     
         }
     }

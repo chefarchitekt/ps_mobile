@@ -5,7 +5,7 @@ import { Text } from 'react-native-elements';
 class DirectoryDetailScreen extends Component {
     render() {
         return (
-            <Text h2>Directory Detail</Text>
+            <Text h2>Team Member Detail</Text>
         );
     }
 }
