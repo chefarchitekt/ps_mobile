@@ -12,7 +12,9 @@ import {
     
     UPDATE_USER_CONTACTS_SUCCESS,
     ADD_USER_CONTACTS_SUCCESS,
-    DELETE_USER_CONTACTS_SUCCESS
+    DELETE_USER_CONTACTS_SUCCESS,
+
+    USER_SIGN_OUT
 } from '../../../process/types/appTypes';
 
 import {
@@ -56,7 +58,8 @@ export default (state = INITIAL_STATE, action) => {
             return { ...state, personalContacts: action.payload, isLoading: false };
         case EMPTY_USER_CONTACTS:
             return { ...state, personalContacts: [], isLoading: false };
-        
+        case USER_SIGN_OUT:
+            return { ...INITIAL_STATE };
         default:
             return state;
     }

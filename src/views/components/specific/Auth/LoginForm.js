@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { Keyboard, View } from 'react-native';
 import { Button, FormLabel, FormInput, FormValidationMessage } from 'react-native-elements';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
+import { Spinner } from '../../common';
 import { loginUserInput, loginInputError, userLoginRequest } from '../../../../process/actions';
 import validateLoginInput from '../../../../process/validations/validateLoginInput';
 
@@ -49,6 +50,7 @@ class LoginForm extends Component {
             IsPersistent
         };
 
+        Keyboard.dismiss();
         e.preventDefault();
 
         console.log('logindata');
@@ -82,6 +84,13 @@ class LoginForm extends Component {
         return isValid;
     }
 
+    renderSpinner() {
+        const { isLoading } = this.props;
+        if (isLoading) {
+            return <Spinner spinnerSize={'small'} />;
+        } 
+    }
+
     render() {
         console.log(this.props);
         
@@ -92,6 +101,7 @@ class LoginForm extends Component {
                 <FormLabel >User Name</FormLabel>
                 <FormInput 
                     placeholder="username..." 
+                    keyboardType={'email-address'}
                     autoCorrect={false}
                     value={this.props.UserName}
                     onChangeText={text => this.props.loginUserInput({ prop: 'UserName', value: text })}
@@ -122,7 +132,9 @@ class LoginForm extends Component {
                     backgroundColor="#03A9F4"
                     title="SIGN IN"
                     onPress={this.onSubmit}
+                    onLongPress={this.onSubmit}
                 />
+                {this.renderSpinner()}
             </View>
         );
     }

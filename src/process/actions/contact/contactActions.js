@@ -163,13 +163,13 @@ const cleanCallIdNumber = (numberString) => {
     return cleanNumber;
 };
 
-export const getActiveContact = (selectedUserId, userSessionData) => {
+export const getActiveContact = (selectedUserId, KazooAccountId, contactType, personalContactObject) => {
     const noPictureImg = 'data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTguMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDE4OC4xNDkgMTg4LjE0OSIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgMTg4LjE0OSAxODguMTQ5OyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSIgd2lkdGg9IjUxMnB4IiBoZWlnaHQ9IjUxMnB4Ij4KPGc+Cgk8Zz4KCQk8ZGVmcz4KCQkJPGNpcmNsZSBpZD0iU1ZHSURfMV8iIGN4PSI5NC4wNzQiIGN5PSI5NC4wNzUiIHI9Ijk0LjA3NCIvPgoJCTwvZGVmcz4KCQk8dXNlIHhsaW5rOmhyZWY9IiNTVkdJRF8xXyIgc3R5bGU9Im92ZXJmbG93OnZpc2libGU7ZmlsbDojRTZFN0UyOyIvPgoJCTxjbGlwUGF0aCBpZD0iU1ZHSURfMl8iPgoJCQk8dXNlIHhsaW5rOmhyZWY9IiNTVkdJRF8xXyIgc3R5bGU9Im92ZXJmbG93OnZpc2libGU7Ii8+CgkJPC9jbGlwUGF0aD4KCQk8cGF0aCBzdHlsZT0iY2xpcC1wYXRoOnVybCgjU1ZHSURfMl8pO2ZpbGw6I0VDQzE5QzsiIGQ9Ik0xMjYuNzA4LDE1My45NDZoLTAuMDJjLTIuMDQxLTEuNTQ1LTQuMTc4LTIuOTE5LTYuNDI5LTQuMTU5ICAgIGMtMC4wNTgtMC4wMzgtMC4xMTUtMC4wNzYtMC4xOTEtMC4wOTVjLTEwLjY0Ni01Ljg3Ni0xNy44NTctMTcuMjA5LTE3Ljg1Ny0zMC4yMzlsLTE2LjEyMS0wLjA3NyAgICBjMCwxMy4wNjktNy4yNjksMjQuNDU5LTE4LjAxLDMwLjMxNWMwLDAtMC4wMTksMC0wLjAzOCwwLjAxOWMtMi4yNzEsMS4yNC00LjQ0NSwyLjYzMy02LjUwNiw0LjE1OSAgICBjLTEzLjM1NSw5Ljk0LTIxLjk5NywyNS44MzItMjEuOTk3LDQzLjc2NmgxMDkuMDdDMTQ4LjYxLDE3OS43NCwxNDAuMDA2LDE2My44ODUsMTI2LjcwOCwxNTMuOTQ2eiIvPgoJCTxwYXRoIHN0eWxlPSJjbGlwLXBhdGg6dXJsKCNTVkdJRF8yXyk7ZmlsbDojMTY4RUY3OyIgZD0iTTE0OC42MDksMTk3LjYyOUgzOS41MzhjMC0xNy45MzQsOC42NDItMzMuODI2LDIxLjk5Ny00My43NjYgICAgYzIuMDYxLTEuNTI2LDQuMjM1LTIuOTE5LDYuNTA1LTQuMTU5YzAuMDItMC4wMTksMC4wMzktMC4wMTksMC4wMzktMC4wMTljMS43NTUtMC45NzMsMy40MzQtMi4wOCw0Ljk3OS0zLjMzOSAgICBjNS4zNDIsNS40NzYsMTIuODAyLDguODcyLDIxLjA2Myw4Ljg3MmM4LjI0MiwwLDE1LjY4My0zLjM5NiwyMS4wMjQtOC44NTNjMS41MjYsMS4yNTksMy4xODcsMi4zNjYsNC45MjIsMy4zMiAgICBjMC4wNzYsMC4wMTksMC4xMzQsMC4wNTcsMC4xOTEsMC4wOTVjMi4yNTEsMS4yNCw0LjM4OCwyLjYxNCw2LjQyOSw0LjE1OWgwLjAyQzE0MC4wMDUsMTYzLjg3OSwxNDguNjA5LDE3OS43MzMsMTQ4LjYwOSwxOTcuNjI5eiAgICAiLz4KCQk8cGF0aCBzdHlsZT0iY2xpcC1wYXRoOnVybCgjU1ZHSURfMl8pO2ZpbGw6I0VDQzE5QzsiIGQ9Ik01Mi4yMTcsMzguMDkxdjQyLjgzNmMwLDI4Ljk3NiwyNS40MzcsNTIuNDY1LDQxLjg1OCw1Mi40NjUgICAgYzE2LjQxOSwwLDQxLjg1OC0yMy40ODksNDEuODU4LTUyLjQ2NVYzOC4wOTFINTIuMjE3eiIvPgoJCTxwYXRoIHN0eWxlPSJjbGlwLXBhdGg6dXJsKCNTVkdJRF8yXyk7ZmlsbDojNDk0ODQ2OyIgZD0iTTEyOS4xMTQsMzAuMjA3Yy05LjEyMy0xMS40MjMtMjIuOTcyLTE4LjcyNi0zOC40NjMtMTguNzI2ICAgIGMtMjcuNTIxLDAtNDkuODEsMjIuOTcyLTQ5LjgxLDUxLjMwMWMwLDE1LjAzNiw2LjI2NywyOC41NTYsMTYuMjc0LDM3LjkzMmMtMi41NzgtNi40Ny00LjAxOC0xMy43MjItNC4wMTgtMjEuMzggICAgYzAtMTIuMzA3LDMuNzQtMjMuNTc4LDkuOTU3LTMyLjI0NmM2LjU5NiwyLjkzMiwxNy4yODYsMy45OTMsMjkuMDExLDIuMzc2YzExLjYyNS0xLjU5MiwyMS41MzEtNS40MzMsMjcuMTE2LTEwLjAwNyAgICBjMTAuMTg1LDguOTk2LDE2LjgwNiwyMy41MDIsMTYuODA2LDM5Ljg3N2MwLDguMzktMS43MTksMTYuMjc1LTQuODAyLDIzLjE5OWM5LjgzLTQuMDY5LDE3LjA1OC0xOC41NzQsMTcuMDU4LTM1LjgzNSAgICBDMTQ4LjI0Myw0OC4yMjUsMTM5Ljk1NCwzMi45ODcsMTI5LjExNCwzMC4yMDd6Ii8+Cgk8L2c+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPC9zdmc+Cg=='
     const wrongUrlPicture = '/Content/Image/Profiles/nopicture1.jpg';
     return (dispatch) => {
         const memberToSeek = { 
             urlParams: {
-                accountId: userSessionData.KazooAccountId,
+                accountId: KazooAccountId,
                 userId: selectedUserId
             },
             successFunc: (response) => {
@@ -180,7 +180,7 @@ export const getActiveContact = (selectedUserId, userSessionData) => {
                     avatar_url: (response.data.profile.profile_picture !== undefined && response.data.profile.profile_picture !== wrongUrlPicture) ? response.data.profile.profile_picture : noPictureImg,
                     email: response.data.email,
                     name: response.data.first_name + ' ' + response.data.last_name,
-                    onlineStatus: response.data.status,
+                    status: response.data.status,
                     number: cleanCallIdNumber(response.data.caller_id_number),
                     extension: response.data.extension,
                     presence_id: response.data.presence_id,
@@ -198,7 +198,14 @@ export const getActiveContact = (selectedUserId, userSessionData) => {
             }
             
         };     
-        User.getUser(memberToSeek.urlParams, memberToSeek.successFunc, memberToSeek.errorFunc);
+        if (contactType === 'team') {
+            User.getUser(memberToSeek.urlParams, memberToSeek.successFunc, memberToSeek.errorFunc);
+        } else {
+            dispatch({
+                type: GET_ACTIVE_CONTACT_SUCCESS,
+                payload: personalContactObject
+            });
+        }
     };
 };
 
@@ -261,7 +268,7 @@ const wrongUrlPicture = '/Content/Image/Profiles/nopicture1.jpg';
                             //avatar_url: (response.data.profile.profile_picture !== undefined && response.data.profile.profile_picture !== wrongUrlPicture) ? response.data.profile.profile_picture : noPictureImg,
                             email: response.data.email,
                             name: response.data.first_name + ' ' + response.data.last_name,
-                            onlineStatus: response.data.status,
+                            status: response.data.status,
                             number: cleanCallIdNumber(response.data.caller_id_number),
                             extension: response.data.extension,
                             presence_id: response.data.presence_id,

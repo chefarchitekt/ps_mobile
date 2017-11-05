@@ -6,5 +6,5 @@ import contactReducer from './contact/contactReducer';
 export default combineReducers({
     //appNavigation: navReducer,
     userLogin: loginReducer,
-    userContacts: contactReducer
+    userProfileContacts: contactReducer
 });

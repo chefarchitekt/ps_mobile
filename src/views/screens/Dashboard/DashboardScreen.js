@@ -7,7 +7,7 @@ import VectorIcon from 'react-native-vector-icons/Feather';
 
 import ContactActionPanel from '../../../views/components/common/ContactActionPanel';
 import { userLogoutRequest } from '../../../process/actions/auth/loginActions';
-import { selectContactListItem } from '../../../process/actions/contact/contactActions';
+import { selectContactListItem, getActiveContact } from '../../../process/actions/contact/contactActions';
 import { mobileMetrics } from '../../../views/config/';
 
 class DashboardScreen extends Component {
@@ -62,6 +62,12 @@ class DashboardScreen extends Component {
         this.props.navigation.navigate('Authentication');
     }
 
+    handleOnPress(listItem) {
+        const { KazooAccountId } = this.props.userLogin.user;
+        this.props.selectContactListItem(listItem);
+        this.props.getActiveContact(listItem.id, KazooAccountId, 'team');
+    }
+    
     isOnline(status) {
         if (status === 'online') {
             return {
@@ -86,87 +92,74 @@ class DashboardScreen extends Component {
             };
         }
     }
-    
+
+    /* //redux state of userProfileContacts
+        {
+            profileDetail: {},
+            isListItemSelected: false,
+            selectedUserContact: {},
+            activeContact: {},
+            teamContacts: [],
+            personalContacts: [],
+            isLoading: false,
+            credentialError: false
+        };
+    */
+    renderList() {
+        const userList = this.props.userProfileContacts.teamContacts;
+        if (userList.length > 0) {
+            return (
+                <ScrollView>
+                <List containerStyle={{ marginBottom: 20 }}>
+                    {
+                        userList.map((listItem, i) => (
+                        <ListItem
+                            roundAvatar
+                            leftIcon={{ name: 'person', color: 'blue' }}
+                            key={i}
+                            title={listItem.name}
+                            subtitle={this.renderControl(listItem.id)}
+                            rightIcon={this.isOnline(listItem.status)}
+                            onPress={() => this.handleOnPress(listItem)}
+                        />
+                        
+                    ))
+                    }
+                </List>
+            </ScrollView>
+            );
+        } else {
+            return (
+                <ScrollView>
+                <List containerStyle={{ marginBottom: 20 }}>
+                    {
+                        <ListItem
+                            roundAvatar
+                            leftIcon={{ name: 'person', color: 'red' }}
+                            key={0}
+                            title='You have yet to have team members.'
+                        />
+                    }
+                </List>
+            </ScrollView>
+            );
+        }
+    }
+
     renderControl(selectedId) {
-        const { activeContact, isListItemSelected } = this.props.userContacts;
+        const { activeContact, isListItemSelected } = this.props.userProfileContacts;
         const expanded = activeContact.id === selectedId;
         //const { navigation } = this.props;
         if (isListItemSelected && expanded) {
-        return (
-            <ContactActionPanel panelNavigation={this.props} />
+            return (
+                <ContactActionPanel panelNavigation={this.props} />
             );     
         }
     }
     
     render() {
-        //mock
-        const userList = [
-            {
-                id: 'adf001',
-                name: 'Amy Farha',
-                avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
-                subtitle: 'President',
-                phone: '(+1)23411111',
-                status: 'online'
-            },
-            {
-                id: 'adf002',
-                name: 'Jessica',
-                avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
-                subtitle: 'Vice President',
-                phone: '(+1)22255622',
-                status: 'offline'
-            },
-            {
-                id: 'adf003',
-                name: 'Chris Jackson',
-                avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
-                subtitle: 'Vice Chairman',
-                phone: '(+1)23355633',
-                status: 'oncall'
-            },
-            {
-                id: 'adf004',
-                name: 'Brandon Lee',
-                avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
-                subtitle: 'Senior Manager',
-                phone: '(+1)23335634',
-                status: 'online'
-            },
-            {
-                id: 'adf005',
-                name: 'Ellen',
-                avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
-                subtitle: 'Manager',
-                phone: '(+1)23785655',
-                status: 'online'
-            },
-            {
-                id: 'adf006',
-                name: 'Jessica',
-                avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
-                subtitle: 'Vice President',
-                phone: '(+1)26555656',
-                status: 'oncall'
-            },
-            {
-                id: 'adf007',
-                name: 'Damien Rock',
-                avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
-                subtitle: 'Vice Chairman',
-                phone: '(+1)21155677',
-                status: 'offline'
-            },
-            {
-                id: 'adf008',
-                name: 'John Butler',
-                avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
-                subtitle: 'Senior Manager',
-                phone: '(+1)23413688',
-                status: 'offline'
-            }
-        ];
-
+        const userList = this.props.userProfileContacts.teamContacts;
+        const totalListItem = userList.length;
         const { 
             containerBase, 
             containerRow1, 
@@ -180,32 +173,15 @@ class DashboardScreen extends Component {
         } = styles;
 
         const { navigation } = this.props;
-       return (
+        return (
            <View style={containerBase}>
                 <View style={containerRow1}>
                     <View style={[containerBox1, teamContainerStyle]}>
                             <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
                                 <VectorIcon name='users' size={32} color='grey' />
-                                <Text style={{ fontSize: 24, fontWeight: 'bold', color: 'grey' }}> Team</Text>
+                                <Text style={{ fontSize: 24, fontWeight: 'bold', color: 'grey' }}> Team ({totalListItem}) </Text>
                             </View>
-                            <ScrollView>
-                                <List containerStyle={{ marginBottom: 20 }}>
-                                    {
-                                        userList.map((listItem, i) => (
-                                        <ListItem
-                                            roundAvatar
-                                            avatar={{ uri: listItem.avatar_url }}
-                                            key={i}
-                                            title={listItem.name}
-                                            subtitle={this.renderControl(listItem.id)}
-                                            rightIcon={this.isOnline(listItem.status)}
-                                            onPress={() => this.props.selectContactListItem(listItem)}
-                                        />
-                                        
-                                    ))
-                                    }
-                                </List>
-                            </ScrollView>
+                            {this.renderList()}
                     </View>
                 </View>
                 <View style={containerRow2}>
@@ -216,8 +192,8 @@ class DashboardScreen extends Component {
                                 size={52}
                                 color='green'
                             />
-                            <Text style={{ fontSize: 24, fontWeight: 'bold', color: 'green' }}>3</Text>
-                            <Text style={{ fontSize: 14, color: 'green' }}>Missed Call</Text>
+                            <Text style={{ fontSize: 24, fontWeight: 'bold', color: 'red' }}>3</Text>
+                            <Text style={{ fontSize: 14, color: 'red' }}>Missed Call</Text>
                         </TouchableOpacity>
                     </View>
                     <View style={[containerBox2, msgContainerStyle]}>
@@ -227,8 +203,8 @@ class DashboardScreen extends Component {
                                 size={52}
                                 color='orange'
                             />
-                            <Text style={{ fontSize: 24, fontWeight: 'bold', color: 'orange' }}>7</Text>
-                            <Text style={{ fontSize: 14, color: 'orange' }}>New Message</Text>
+                            <Text style={{ fontSize: 24, fontWeight: 'bold', color: 'red' }}>7</Text>
+                            <Text style={{ fontSize: 14, color: 'red' }}>New Message</Text>
                         </TouchableOpacity>
                     </View>
                     <View style={[containerBox2, vmContainerStyle]}>
@@ -236,7 +212,7 @@ class DashboardScreen extends Component {
                             <VectorIcon
                                 name='voicemail'
                                 size={52}
-                                color='red'
+                                color='grey'
                             />
                             <Text style={{ fontSize: 24, fontWeight: 'bold', color: 'red' }}>0</Text>
                             <Text style={{ fontSize: 14, color: 'red' }}>New Voicemail</Text>
@@ -244,7 +220,6 @@ class DashboardScreen extends Component {
                     </View>
                 </View>
            </View>
-            
         );
     }
 }
@@ -305,46 +280,22 @@ const styles = {
     vmContainerStyle: {
         backgroundColor: 'white'
     },
-    
-    controlPanel: {
-        boxContainer: {
-            flex: 1,
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            marginTop: 1,
-            marginLeft: 1,
-            marginBottom: 1,
-            marginRight: 1
-        },
-        boxItem: {
-            flex: 1,
-            height: 30,
-            marginTop: 1,
-            marginBottom: 1,
-            paddingTop: 2,
-            paddingLeft: 2,
-            paddingBottom: 2,
-            paddingRight: 2,
-            borderWidth: 0.5,
-            borderColor: 'grey',
-            alignItems: 'center'
-        }
-    }
 };
 
 const mapStateToProps = (state) => {
-    const { userLogin, userContacts } = state;
+    const { userLogin, userProfileContacts } = state;
 
     return {
         userLogin,
-        userContacts
+        userProfileContacts
     };
 };
 
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
         userLogoutRequest,
-        selectContactListItem
+        selectContactListItem,
+        getActiveContact
     }, dispatch);
 };
 
