@@ -29,10 +29,10 @@ import {
     CONTROL_PANEL_CLICK
 } from '../../../process/types/commonTypes';
 
-import { 
-    saveKazooUserProfileStore,
+import {
+    saveKazooPersonalContactsStore,
     saveKazooTeamContactsStore,
-    //saveKazooTeamContactsDetailStore
+    saveKazooUserProfileStore,
 } from '../../../services/storage/storageKazooContactServices';
 
 import { 
@@ -72,8 +72,7 @@ export const getActiveUser = (dispatch, userSessionData) => {
             });
             //kazoo response for is { data: { data: {...}, node: {..}, request_id: {..}, revision: {..}, status: {..}, version: {..} }}
             //at http services we already passed this response as response.data
-            console.log('SUCCESS GET ACTIVE USER: ');
-            console.log(response.data);
+            getPersonalContact(dispatch, response.data);
         },
         errorFunc: (error) => {
             console.log('ERROR GET ACTIVE USER: ');
@@ -82,6 +81,53 @@ export const getActiveUser = (dispatch, userSessionData) => {
         }
     };
     User.getUser(accessParams.urlParams, accessParams.successFunc, accessParams.errorFunc);
+};
+
+export const getPersonalContact = (dispatch, userSessionData) => {
+    const personalContacts = [];
+    if (userSessionData.personal_contact_list.length > 0) {
+        const teamArray = userSessionData.personal_contact_list;
+        for (let i = 0; i < teamArray.length; i++) {
+            const contactObject = {
+                id: i,
+                custInfo: teamArray[i].CustomerInfo,
+                avatar: '',
+                icon: '',
+                name: teamArray[i].name,   
+                address: teamArray[i].name,                        
+                email: teamArray[i].address,
+                number: cleanCallIdNumber(teamArray[i].number),
+                mobileNumber: cleanCallIdNumber(teamArray[i].mobileNumber),
+                homeNumber: cleanCallIdNumber(teamArray[i].homeNumber),
+                workNumber: cleanCallIdNumber(teamArray[i].workNumber),
+                otherNumber: cleanCallIdNumber(teamArray[i].otherNumber),
+                faxNumber: cleanCallIdNumber(teamArray[i].faxNumber),
+                company: teamArray[i].company,
+                url: teamArray[i].url,
+                role: teamArray[i].role,
+                type: teamArray[i].type
+            };
+            personalContacts.push(contactObject);
+
+            if (i === teamArray.length - 1) {
+                dispatch({
+                    type: GET_USER_CONTACTS_SUCCESS,
+                    payload: personalContacts
+                });
+
+                const jsonData = JSON.stringify(personalContacts);
+                saveKazooPersonalContactsStore(jsonData);
+                dispatch({
+                    type: SET_USER_CONTACTS
+                });
+            }
+        } 
+    } else {
+        dispatch({
+            type: EMPTY_USER_CONTACTS
+        });
+        saveKazooPersonalContactsStore([]);
+    }
 };
 
 export const getTeamMember = (dispatch, userSessionData) => {
@@ -153,14 +199,18 @@ export const getTeamMember = (dispatch, userSessionData) => {
 };
 
 const cleanCallIdNumber = (numberString) => {
-    const cleanNumber = numberString.replace(/[\+\(\)-]|\s/g, "");
+    if (numberString !== '' && numberString !== null && numberString !== undefined) {
+        const cleanNumber = numberString.replace(/[\+\(\)-]|\s/g, "");
+        
+        if (cleanNumber.startsWith("1")) {
+            const cleanNumberStartWithOne = cleanNumber.substring(1);
+            return cleanNumberStartWithOne;
+        }
     
-    if (cleanNumber.startsWith("1")) {
-        const cleanNumberStartWithOne = cleanNumber.substring(1);
-        return cleanNumberStartWithOne;
+        return cleanNumber;
+    } else {
+        return '';
     }
-
-    return cleanNumber;
 };
 
 export const getActiveContact = (selectedUserId, KazooAccountId, contactType, personalContactObject) => {

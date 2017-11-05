@@ -6,7 +6,6 @@ import { List, ListItem, Icon, Divider } from 'react-native-elements';
 import VectorIcon from 'react-native-vector-icons/Feather';
 
 import DirectoryActionPanel from '../../../views/components/common/DirectoryActionPanel';
-import { userLogoutRequest } from '../../../process/actions/auth/loginActions';
 import { selectContactListItem, getActiveContact } from '../../../process/actions/contact/contactActions';
 import { mobileMetrics } from '../../../views/config/';
 
@@ -14,7 +13,7 @@ class DirectoryListScreen extends Component {
     static navigationOptions = ({ navigation }) => {
         const { navigate } = navigation;
         return {
-          title: 'Company Contacts',
+          title: 'Team Contacts',
           headerRight: (
             <View style={{ flexDirection: 'row' }}>
                 <Icon 
@@ -38,10 +37,6 @@ class DirectoryListScreen extends Component {
         };
       };
 
-    componentDidMount() {
-        this.props.navigation.setParams({ logOut: this.onLogout });
-    }
-      
     handleOnPress(listItem) {
         const { KazooAccountId } = this.props.userLogin.user;
         this.props.selectContactListItem(listItem);
@@ -157,35 +152,33 @@ class DirectoryListScreen extends Component {
                     <View style={[containerBox2, tabContainerStyle]}>
                         <TouchableOpacity style={{ alignItems: 'center' }} onPress={() => navigation.navigate('NavContactList')}>
                             <VectorIcon
-                                name='phone-call'
-                                size={52}
-                                color='green'
+                                name='users'
+                                size={48}
+                                color='grey'
                             />
-                            <Text style={{ fontSize: 24, fontWeight: 'bold', color: 'red' }}>3</Text>
-                            <Text style={{ fontSize: 14, color: 'red' }}>Missed Call</Text>
+                            <Text style={{ fontSize: 26, color: 'grey' }}>Personal</Text>
                         </TouchableOpacity>
                     </View>
                     <View style={[containerBox2, tabContainerStyle]}>
                         <TouchableOpacity style={{ alignItems: 'center' }} onPress={() => navigation.navigate('NavDirectoryList')}>
                             <VectorIcon
-                                name='message-square'
-                                size={52}
-                                color='orange'
+                                name='users'
+                                size={48}
+                                color='red'
                             />
-                            <Text style={{ fontSize: 24, fontWeight: 'bold', color: 'red' }}>7</Text>
-                            <Text style={{ fontSize: 14, color: 'red' }}>New Message</Text>
+                            <Text style={{ fontSize: 26, color: 'red' }}>Team</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
                 <View style={containerRow1}>
-                <View style={[containerBox1, teamContainerStyle]}>
+                    <View style={[containerBox1, teamContainerStyle]}>
                         <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
-                            <VectorIcon name='users' size={32} color='grey' />
-                            <Text style={{ fontSize: 24, fontWeight: 'bold', color: 'grey' }}> Team ({totalListItem}) </Text>
+                            <VectorIcon name='square' size={24} color='grey' />
+                            <Text style={{ fontSize: 24, fontWeight: 'bold', color: 'grey' }}> List ({totalListItem}) </Text>
                         </View>
                         {this.renderList()}
+                    </View>
                 </View>
-            </View>
            </View>
         );
     }
@@ -225,7 +218,7 @@ const styles = {
     },
     containerBox2: {
         flex: 1,
-        height: boxHeight,
+        height: boxHeight * 0.65,
         marginBottom: 10,
         paddingTop: 5,
         paddingLeft: 5,
@@ -254,7 +247,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
-        userLogoutRequest,
         selectContactListItem,
         getActiveContact
     }, dispatch);
